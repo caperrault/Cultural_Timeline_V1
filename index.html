@@ -3,7 +3,7 @@
 <style>
 
 body {
-  font: 14px sans-serif;
+  font: 16px sans-serif;
   background-color: #000;
 }
 
@@ -28,110 +28,124 @@ p {
   top: 450px;
   left: 20px;
   color: white;
+  font: 10px sans-serif;
 }
 
 #controlsMusic {
   font-size: 14px;
   position: absolute;
-  top: 480px;
+  top: 475px;
   left: 20px;
   color: white;
+  font: 10px sans-serif;
 }
 
 #controlsTv {
   font-size: 14px;
   position: absolute;
-  top: 510px;
+  top: 500px;
   left: 20px;
   color: white;
+  font: 10px sans-serif;
 }
 
 #controlsAdvertising {
   font-size: 14px;
   position: absolute;
-  top: 540px;
+  top: 525px;
   left: 20px;
   color: white;
+  font: 10px sans-serif;
 }
 
 #controlsArt {
   font-size: 14px;
   position: absolute;
-  top: 570px;
+  top: 550px;
   left: 20px;
   color: white;
+  font: 10px sans-serif;
 }
 
 #controlsBook {
   font-size: 14px;
   position: absolute;
-  top: 600px;
+  top: 575px;
   left: 20px;
   color: white;
+  font: 10px sans-serif;
 }
 
 #controlsEntertainment {
   font-size: 14px;
   position: absolute;
-  top: 630px;
+  top: 600px;
   left: 20px;
   color: white;
+  font: 10px sans-serif;
 }
 
 #controlsEvent {
   font-size: 14px;
   position: absolute;
-  top: 660px;
+  top: 625px;
   left: 20px;
   color: white;
+  font: 10px sans-serif;
 }
 
 #controlsFashionRetail {
   font-size: 14px;
   position: absolute;
-  top: 690px;
+  top: 650px;
   left: 20px;
   color: white;
+  font: 10px sans-serif;
 }
 
 #controlsIcons {
   font-size: 14px;
   position: absolute;
-  top: 720px;
+  top: 675px;
   left: 20px;
   color: white;
+  font: 10px sans-serif;
 }
 
 #controlsMedia {
   font-size: 14px;
   position: absolute;
-  top: 750px;
+  top: 700px;
   left: 20px;
   color: white;
+  font: 10px sans-serif;
 }
 
 #controlsPolitics {
   font-size: 14px;
   position: absolute;
-  top: 780px;
+  top: 725px;
   left: 20px;
   color: white;
+  font: 10px sans-serif;
 }
 
 #controlsSocialMovements {
   font-size: 14px;
   position: absolute;
-  top: 810px;
+  top: 750px;
   left: 20px;
   color: white;
+  font: 10px sans-serif;
 }
 
 #controlsTech {
   font-size: 14px;
   position: absolute;
-  top: 840px;
+  top: 775px;
   left: 20px;
   color: white;
+  font: 10px sans-serif;
 }
 
 input {
@@ -170,11 +184,12 @@ div.mapTooltip {
 <body>
 
 <script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 
 <script>
 
 var margin = {top: 20, right: 20, bottom: 30, left: 100},
-    width = 1200 - margin.left - margin.right,
+    width = 1400 - margin.left - margin.right,
     height = 600 - margin.top - margin.bottom,
     padding = 1,
     radius = 16;
@@ -331,7 +346,7 @@ var checkboxTech = controlsTech.append("input")
 controlsTech.append("span")
         .text("Technology");
 
-x.domain([1980,2015]);
+x.domain([1980,2019]);
 y.domain([0,9]);
 
 svg.append("g")
@@ -375,6 +390,7 @@ function draw(nodes) {
               .style("cursor", "pointer")
               .on("click", function(d) {
                                  div.transition().duration(300).style("opacity", 1);
+                                //  div.html("<img src=" + d.IMAGE + " width=250 > <br><p style = padding-left:5px;font-weight:bold>"  + d.TITLE + " (" + d.YEAR + ")</p><p style = padding-left:5px;font-size:10>" + d.DESCRIPTION + "</p><a href='" + d.SOURCE + "' style=padding-left:5px;text-decoration:underline;font-size:10;>Source</a>")
                                  div.html("<img src=" + d.IMAGE + " width=250 > <br><p style = padding-left:5px;font-weight:bold>"  + d.TITLE + " (" + d.YEAR + ")</p><p style = padding-left:5px;font-size:10>" + d.DESCRIPTION + "</p><p style=padding-left:5px;text-decoration:underline;font-size:10;>Source</p>")
                                  .style("left", (d3.event.pageX) + "px")
                                  .style("top", (d3.event.pageY-10) + "px");
@@ -505,7 +521,7 @@ d3.csv("CultureFresco2.csv", function(error, data) {
     }
 
     draw(list);
-    
+
   }
 
   d3.select("#controlsFilm").on("change", update);
