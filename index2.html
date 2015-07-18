@@ -339,7 +339,7 @@ svg.append("g")
    .attr("transform", "translate(0,100)")
    .call(xAxis)
 
-var xVar = "YEAR",
+var xVar = "year",
     node;
 
 function draw(nodes) {
@@ -367,7 +367,7 @@ function draw(nodes) {
                   .call(force.drag);
 
           node.append("image")
-              .attr("xlink:href", function(d) { return d.IMAGE; })
+              .attr("xlink:href", function(d) { return "img/" + d.name + ".jpg"; })
               .attr("x", -8)
               .attr("y", -8)
               .attr("width", 30)
@@ -375,7 +375,7 @@ function draw(nodes) {
               .style("cursor", "pointer")
               .on("click", function(d) {
                                  div.transition().duration(300).style("opacity", 1);
-                                 div.html("<img src=" + d.IMAGE + " width=250 > <br><p style = padding-left:5px;font-weight:bold>"  + d.TITLE + " (" + d.YEAR + ")</p><p style = padding-left:5px;font-size:10>" + d.DESCRIPTION + "</p><p style=padding-left:5px;text-decoration:underline;font-size:10;>Source</p>")
+                                 div.html("<img src=img_med/" + d.name + ".png width=250 > <br><p style = padding-left:5px;font-weight:bold>"  + d.title + " (" + d.year + ")</p><p style = padding-left:5px;font-size:10>Fusce in nibh at nulla tincidunt auctor id sit amet dolor. Sed nec leo quam. Donec risus libero, efficitur nec urna et, vehicula tincidunt ligula. Mauris convallis in est molestie ullamcorper. Vestibulum auctor eleifend ligula, eu consequat lacus interdum mattis.</p><p style=padding-left:5px;text-decoration:underline;font-size:10;>Source</p>")
                                  .style("left", (d3.event.pageX) + "px")
                                  .style("top", (d3.event.pageY-10) + "px");
                               })
@@ -426,104 +426,44 @@ function draw(nodes) {
         }
 }
 
-d3.csv("CultureFresco2.csv", function(error, data) {
+d3.csv("graph2.csv", function(error, data) {
 
-  var musicData = data.filter(function(d, i) { return d.PRIMARYCATEGORY === "Music" })
-    , filmData = data.filter(function(d, i) { return d.PRIMARYCATEGORY === "Film" })
-    , tvData = data.filter(function(d, i) { return d.PRIMARYCATEGORY === "Tv" })
-    , advertisingData = data.filter(function(d, i) { return d.PRIMARYCATEGORY === "Advertising" })
-    , artData = data.filter(function(d, i) { return d.PRIMARYCATEGORY === "Art" })
-    , bookData = data.filter(function(d, i) { return d.PRIMARYCATEGORY === "Book" })
-    , entertainmentData = data.filter(function(d, i) { return d.PRIMARYCATEGORY === "Entertainment" })
-    , eventData = data.filter(function(d, i) { return d.PRIMARYCATEGORY === "Event" })
-    , fashionRetailData = data.filter(function(d, i) { return d.PRIMARYCATEGORY === "Fashion / Retail" })
-    , iconsData = data.filter(function(d, i) { return d.PRIMARYCATEGORY === "Icons" })
-    , mediaData = data.filter(function(d, i) { return d.PRIMARYCATEGORY === "Media" })
-    , politicsData = data.filter(function(d, i) { return d.PRIMARYCATEGORY === "Politics" })
-    , socialMovementsData = data.filter(function(d, i) { return d.PRIMARYCATEGORY === "Social Movements" })
-    , techData = data.filter(function(d, i) { return d.PRIMARYCATEGORY === "Tech" });
+  console.log(data);
+
+  var musicData = data.filter(function(d, i) { return d.type === 'music' })
+    , filmData = data.filter(function(d, i) { return d.type === 'film' })
+    , tvData = data.filter(function(d, i) { return d.type === 'Tv' });
 
   function update() {
 
     var film = checkboxFilm.node().checked
       , music = checkboxMusic.node().checked
       , tv = checkboxTv.node().checked
-      , advertising = checkboxAdvertising.node().checked
-      , art = checkboxArt.node().checked
-      , book = checkboxBook.node().checked
-      , entertainment = checkboxEntertainment.node().checked
-      , events = checkboxEvent.node().checked
-      , fashionRetail = checkboxFashionRetail.node().checked
-      , icons = checkboxIcons.node().checked
-      , media = checkboxMedia.node().checked
-      , politics = checkboxPolitics.node().checked
-      , socialMovements = checkboxSocialMovements.node().checked
-      , tech = checkboxTech.node().checked
       , list = [];
 
     if (film) {
+      console.log('film!')
       list = list.concat(filmData);
     }
     if (music) {
+      console.log('music!')
       list = list.concat(musicData)
     }
     if (tv) {
+      console.log('Tv!')
       list = list.concat(tvData)
     }
-    if (advertising) {
-      list = list.concat(advertisingData)
-    }
-    if (art) {
-      list = list.concat(artData)
-    }
-    if (book) {
-      list = list.concat(bookData)
-    }
-    if (entertainment) {
-      list = list.concat(entertainmentData)
-    }
-    if (events) {
-      list = list.concat(eventData)
-    }
-    if (fashionRetail) {
-      list = list.concat(fashionRetailData)
-    }
-    if (icons) {
-      list = list.concat(iconsData)
-    }
-    if (media) {
-      list = list.concat(mediaData)
-    }
-    if (politics) {
-      list = list.concat(politicsData)
-    }
-    if (socialMovements) {
-      list = list.concat(socialMovementsData)
-    }
-    if (tech) {
-      list = list.concat(techData)
-    }
+
+    console.log(list);
 
     draw(list);
-    
   }
 
   d3.select("#controlsFilm").on("change", update);
   d3.select("#controlsMusic").on("change", update);
   d3.select("#controlsTv").on("change", update);
-  d3.select("#controlsAdvertising").on("change", update);
-  d3.select("#controlsArt").on("change", update);
-  d3.select("#controlsBook").on("change", update);
-  d3.select("#controlsEntertainment").on("change", update);
-  d3.select("#controlsEvent").on("change", update);
-  d3.select("#controlsFashionRetail").on("change", update);
-  d3.select("#controlsIcons").on("change", update);
-  d3.select("#controlsMedia").on("change", update);
-  d3.select("#controlsPolitics").on("change", update);
-  d3.select("#controlsSocialMovements").on("change", update);
-  d3.select("#controlsTech").on("change", update);
 
-  draw(musicData.concat(filmData).concat(tvData).concat(advertisingData).concat(artData).concat(bookData).concat(entertainmentData).concat(eventData).concat(fashionRetailData).concat(iconsData).concat(mediaData).concat(politicsData).concat(socialMovementsData).concat(techData));
+  draw(musicData.concat(filmData).concat(tvData));
 
 });
 
