@@ -194,9 +194,9 @@ var margin = {top: 20, right: 20, bottom: 30, left: 100},
     padding = 1,
     radius = 16;
 
-// var zoom = d3.behavior.zoom()
-//         .scaleExtent([1, 10])
-//         .on("zoom", zoomed);
+var zoom = d3.behavior.zoom()
+        .scaleExtent([1, 10])
+        .on("zoom", zoomed);
 
 var x = d3.scale.linear()
     .range([0, width]);
@@ -213,8 +213,8 @@ var svg = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-    // .call(zoom);
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+     .call(zoom);
 
 var div = d3.select("body").append("div")
               .attr("class", "mapTooltip")
@@ -367,39 +367,40 @@ function draw(nodes) {
             .gravity(0)
             .start();
 
-            // Set initial positions
-          nodes.forEach(function(d) {
-              // d.x = x(d[xVar]);
-              // d.y = y(d[yVar-1]);
-              d.radius = radius;
-            });
+        function tick(e) {
+
+          // Set initial positions
+        nodes.forEach(function(d) {
+            // d.x = x(d[xVar]);
+            // d.y = y(d[yVar-1]);
+            d.radius = radius;
+          });
 
           var node = svg.selectAll(".node")
-                        .data(nodes);
+                        .data(nodes, function(d) {return d.IMAGE;});
 
-          node.enter().append("g")
+          var newNode = node.enter().append("g")
                   .attr("class", "node")
+                  .style("cursor", "pointer")
+                  .on("click", function(d) {
+                                     div.transition().duration(300).style("opacity", 1);
+                                    //  div.html("<img src=" + d.IMAGE + " width=250 > <br><p style = padding-left:5px;font-weight:bold>"  + d.TITLE + " (" + d.YEAR + ")</p><p style = padding-left:5px;font-size:10>" + d.DESCRIPTION + "</p><a href='" + d.SOURCE + "' style=padding-left:5px;text-decoration:underline;font-size:10;>Source</a>")
+                                     div.html("<img src=" + d.IMAGE + " width=250 > <br><p style = padding-left:5px;font-weight:bold>"  + d.TITLE + " (" + d.YEAR + ")</p><p style = padding-left:5px;font-size:10>" + d.DESCRIPTION + "</p><p style=padding-left:5px;text-decoration:underline;font-size:10;>Source</p>")
+                                     .style("left", (d3.event.pageX) + "px")
+                                     .style("top", (d3.event.pageY-10) + "px");
+                                  })
+                  .on("mouseout", function (d) { div.transition().delay(1500).duration(300).style("opacity", 0);})
                   .call(force.drag);
 
-          node.append("image")
+          newNode.append("image")
               .attr("xlink:href", function(d) { return d.IMAGE; })
               .attr("x", -8)
               .attr("y", -8)
               .attr("width", 30)
-              .attr("height", 30)
-              .style("cursor", "pointer")
-              .on("click", function(d) {
-                                 div.transition().duration(300).style("opacity", 1);
-                                //  div.html("<img src=" + d.IMAGE + " width=250 > <br><p style = padding-left:5px;font-weight:bold>"  + d.TITLE + " (" + d.YEAR + ")</p><p style = padding-left:5px;font-size:10>" + d.DESCRIPTION + "</p><a href='" + d.SOURCE + "' style=padding-left:5px;text-decoration:underline;font-size:10;>Source</a>")
-                                 div.html("<img src=" + d.IMAGE + " width=250 > <br><p style = padding-left:5px;font-weight:bold>"  + d.TITLE + " (" + d.YEAR + ")</p><p style = padding-left:5px;font-size:10>" + d.DESCRIPTION + "</p><p style=padding-left:5px;text-decoration:underline;font-size:10;>Source</p>")
-                                 .style("left", (d3.event.pageX) + "px")
-                                 .style("top", (d3.event.pageY-10) + "px");
-                              })
-              .on("mouseout", function (d) { div.transition().delay(1500).duration(300).style("opacity", 0);});
+              .attr("height", 30);
 
         node.exit().remove();
 
-        function tick(e) {
           node.each(moveTowardDataPosition(e.alpha));
           node.each(collide(e.alpha));
           node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
@@ -444,20 +445,20 @@ function draw(nodes) {
 
 d3.csv("CultureFresco2.csv", function(error, data) {
 
-  var musicData = data.filter(function(d, i) { return d.PRIMARYCATEGORY === "Music" })
-    , filmData = data.filter(function(d, i) { return d.PRIMARYCATEGORY === "Film" })
-    , tvData = data.filter(function(d, i) { return d.PRIMARYCATEGORY === "Tv" })
-    , advertisingData = data.filter(function(d, i) { return d.PRIMARYCATEGORY === "Advertising" })
-    , artData = data.filter(function(d, i) { return d.PRIMARYCATEGORY === "Art" })
-    , bookData = data.filter(function(d, i) { return d.PRIMARYCATEGORY === "Book" })
-    , entertainmentData = data.filter(function(d, i) { return d.PRIMARYCATEGORY === "Entertainment" })
-    , eventData = data.filter(function(d, i) { return d.PRIMARYCATEGORY === "Event" })
-    , fashionRetailData = data.filter(function(d, i) { return d.PRIMARYCATEGORY === "Fashion / Retail" })
-    , iconsData = data.filter(function(d, i) { return d.PRIMARYCATEGORY === "Icons" })
-    , mediaData = data.filter(function(d, i) { return d.PRIMARYCATEGORY === "Media" })
-    , politicsData = data.filter(function(d, i) { return d.PRIMARYCATEGORY === "Politics" })
-    , socialMovementsData = data.filter(function(d, i) { return d.PRIMARYCATEGORY === "Social Movements" })
-    , techData = data.filter(function(d, i) { return d.PRIMARYCATEGORY === "Tech" });
+  var musicData = data.filter(function(d) { return d.PRIMARYCATEGORY === "Music" })
+    , filmData = data.filter(function(d) { return d.PRIMARYCATEGORY === "Film" })
+    , tvData = data.filter(function(d) { return d.PRIMARYCATEGORY === "Tv" })
+    , advertisingData = data.filter(function(d) { return d.PRIMARYCATEGORY === "Advertising" })
+    , artData = data.filter(function(d) { return d.PRIMARYCATEGORY === "Art" })
+    , bookData = data.filter(function(d) { return d.PRIMARYCATEGORY === "Book" })
+    , entertainmentData = data.filter(function(d) { return d.PRIMARYCATEGORY === "Entertainment" })
+    , eventData = data.filter(function(d) { return d.PRIMARYCATEGORY === "Event" })
+    , fashionRetailData = data.filter(function(d) { return d.PRIMARYCATEGORY === "Fashion / Retail" })
+    , iconsData = data.filter(function(d) { return d.PRIMARYCATEGORY === "Icons" })
+    , mediaData = data.filter(function(d) { return d.PRIMARYCATEGORY === "Media" })
+    , politicsData = data.filter(function(d) { return d.PRIMARYCATEGORY === "Politics" })
+    , socialMovementsData = data.filter(function(d) { return d.PRIMARYCATEGORY === "Social Movements" })
+    , techData = data.filter(function(d) { return d.PRIMARYCATEGORY === "Tech" });
 
   function update() {
 
@@ -521,7 +522,7 @@ d3.csv("CultureFresco2.csv", function(error, data) {
     }
 
     draw(list);
-
+    console.log(list);
   }
 
   d3.select("#controlsFilm").on("change", update);
@@ -543,8 +544,8 @@ d3.csv("CultureFresco2.csv", function(error, data) {
 
 });
 
-// function zoomed() {
-// svg.attr("transform", "scale(" + d3.event.scale + ")");
-// }
+function zoomed() {
+svg.attr("transform", "scale(" + d3.event.scale + ")");
+}
 
 </script>
