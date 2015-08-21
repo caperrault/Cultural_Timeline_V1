@@ -198,9 +198,9 @@ var margin = {top: 20, right: 20, bottom: 30, left: 100},
     padding = 1,
     radius = 16;
 
-var zoom = d3.behavior.zoom()
-        .scaleExtent([1, 10])
-        .on("zoom", zoomed);
+// var zoom = d3.behavior.zoom()
+//         .scaleExtent([1, 10])
+//         .on("zoom", zoomed);
 
 var x = d3.scale.linear()
     .range([0, width]);
@@ -217,8 +217,8 @@ var svg = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-     .call(zoom);
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    // .call(zoom);
 
 var div = d3.select("body").append("div")
               .attr("class", "mapTooltip")
@@ -548,8 +548,8 @@ d3.csv("CultureFresco2.csv", function(error, data) {
 
 });
 
-function zoomed() {
-svg.attr("transform", "scale(" + d3.event.scale + ")");
-}
+// function zoomed() {
+// svg.attr("transform", "scale(" + d3.event.scale + ")");
+// }
 
 </script>
