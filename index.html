@@ -7,6 +7,12 @@ body {
   background-color: #000;
 }
 
+h1 {
+  color: #fff;
+  margin-left: 90px;
+  font-weight: 200;
+}
+
 p {
   font-weight: 100;
 }
@@ -29,8 +35,8 @@ p {
 #controlsFilm {
   font-size: 14px;
   position: absolute;
-  top: 450px;
-  left: 20px;
+  top: 520px;
+  left: 90px;
   color: white;
   font: 10px sans-serif;
 }
@@ -38,17 +44,26 @@ p {
 #controlsMusic {
   font-size: 14px;
   position: absolute;
-  top: 475px;
-  left: 20px;
+  top: 550px;
+  left: 90px;
   color: white;
   font: 10px sans-serif;
 }
 
-#controlsTv {
+#controlsArtLiterature {
   font-size: 14px;
   position: absolute;
-  top: 500px;
-  left: 20px;
+  top: 575px;
+  left: 90px;
+  color: white;
+  font: 10px sans-serif;
+}
+
+#controlsTvEntertainmentMedia {
+  font-size: 14px;
+  position: absolute;
+  top: 525px;
+  left: 250px;
   color: white;
   font: 10px sans-serif;
 }
@@ -56,44 +71,8 @@ p {
 #controlsAdvertising {
   font-size: 14px;
   position: absolute;
-  top: 525px;
-  left: 20px;
-  color: white;
-  font: 10px sans-serif;
-}
-
-#controlsArt {
-  font-size: 14px;
-  position: absolute;
   top: 550px;
-  left: 20px;
-  color: white;
-  font: 10px sans-serif;
-}
-
-#controlsBook {
-  font-size: 14px;
-  position: absolute;
-  top: 575px;
-  left: 20px;
-  color: white;
-  font: 10px sans-serif;
-}
-
-#controlsEntertainment {
-  font-size: 14px;
-  position: absolute;
-  top: 600px;
-  left: 20px;
-  color: white;
-  font: 10px sans-serif;
-}
-
-#controlsEvent {
-  font-size: 14px;
-  position: absolute;
-  top: 625px;
-  left: 20px;
+  left: 250px;
   color: white;
   font: 10px sans-serif;
 }
@@ -101,44 +80,17 @@ p {
 #controlsFashionRetail {
   font-size: 14px;
   position: absolute;
-  top: 650px;
-  left: 20px;
+  top: 575px;
+  left: 250px;
   color: white;
   font: 10px sans-serif;
 }
 
-#controlsIcons {
+#controlsPoliticsSocialMovements {
   font-size: 14px;
   position: absolute;
-  top: 675px;
-  left: 20px;
-  color: white;
-  font: 10px sans-serif;
-}
-
-#controlsMedia {
-  font-size: 14px;
-  position: absolute;
-  top: 700px;
-  left: 20px;
-  color: white;
-  font: 10px sans-serif;
-}
-
-#controlsPolitics {
-  font-size: 14px;
-  position: absolute;
-  top: 725px;
-  left: 20px;
-  color: white;
-  font: 10px sans-serif;
-}
-
-#controlsSocialMovements {
-  font-size: 14px;
-  position: absolute;
-  top: 750px;
-  left: 20px;
+  top: 525px;
+  left: 410px;
   color: white;
   font: 10px sans-serif;
 }
@@ -146,8 +98,17 @@ p {
 #controlsTech {
   font-size: 14px;
   position: absolute;
-  top: 775px;
-  left: 20px;
+  top: 550px;
+  left: 410px;
+  color: white;
+  font: 10px sans-serif;
+}
+
+#controlsIcons {
+  font-size: 14px;
+  position: absolute;
+  top: 575px;
+  left: 410px;
   color: white;
   font: 10px sans-serif;
 }
@@ -190,9 +151,11 @@ div.mapTooltip {
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 
+<h1> AKQA Timeline </h1>
+
 <script>
 
-var margin = {top: 20, right: 20, bottom: 30, left: 100},
+var margin = {top: 0, right: 20, bottom: 30, left: 100},
     width = 1400 - margin.left - margin.right,
     height = 600 - margin.top - margin.bottom,
     padding = 1,
@@ -242,14 +205,14 @@ var checkboxMusic = controlsMusic.append("input")
 controlsMusic.append("span")
         .text("Music");
 
-var controlsTv = d3.select("body").append("label")
-        .attr("id", "controlsTv");
+var controlsTvEntertainmentMedia = d3.select("body").append("label")
+        .attr("id", "controlsTvEntertainmentMedia");
 
-var checkboxTv = controlsTv.append("input")
+var checkboxTvEntertainmentMedia = controlsTvEntertainmentMedia.append("input")
         .attr("type", "checkbox")
         .property("checked", true);
-controlsTv.append("span")
-        .text("Tv");
+controlsTvEntertainmentMedia.append("span")
+        .text("Tv / Entertainment / Media");
 
 var controlsAdvertising = d3.select("body").append("label")
         .attr("id", "controlsAdvertising");
@@ -260,41 +223,14 @@ var checkboxAdvertising = controlsAdvertising.append("input")
 controlsAdvertising.append("span")
         .text("Advertising");
 
-var controlsArt = d3.select("body").append("label")
-        .attr("id", "controlsArt");
+var controlsArtLiterature = d3.select("body").append("label")
+        .attr("id", "controlsArtLiterature");
 
-var checkboxArt = controlsArt.append("input")
+var checkboxArtLiterature = controlsArtLiterature.append("input")
         .attr("type", "checkbox")
         .property("checked", true);
-controlsArt.append("span")
-        .text("Art");
-
-var controlsBook = d3.select("body").append("label")
-        .attr("id", "controlsBook");
-
-var checkboxBook = controlsBook.append("input")
-        .attr("type", "checkbox")
-        .property("checked", true);
-controlsBook.append("span")
-        .text("Literature");
-
-var controlsEntertainment = d3.select("body").append("label")
-        .attr("id", "controlsEntertainment");
-
-var checkboxEntertainment = controlsEntertainment.append("input")
-        .attr("type", "checkbox")
-        .property("checked", true);
-controlsEntertainment.append("span")
-        .text("Entertainment");
-
-var controlsEvent = d3.select("body").append("label")
-        .attr("id", "controlsEvent");
-
-var checkboxEvent = controlsEvent.append("input")
-        .attr("type", "checkbox")
-        .property("checked", true);
-controlsEvent.append("span")
-        .text("Event");
+controlsArtLiterature.append("span")
+        .text("Art / Literature");
 
 var controlsFashionRetail = d3.select("body").append("label")
         .attr("id", "controlsFashionRetail");
@@ -314,32 +250,14 @@ var checkboxIcons = controlsIcons.append("input")
 controlsIcons.append("span")
         .text("Icons");
 
-var controlsMedia = d3.select("body").append("label")
-        .attr("id", "controlsMedia");
+var controlsPoliticsSocialMovements = d3.select("body").append("label")
+        .attr("id", "controlsPoliticsSocialMovements");
 
-var checkboxMedia = controlsMedia.append("input")
+var checkboxPoliticsSocialMovements = controlsPoliticsSocialMovements.append("input")
         .attr("type", "checkbox")
         .property("checked", true);
-controlsMedia.append("span")
-        .text("Media");
-
-var controlsPolitics = d3.select("body").append("label")
-        .attr("id", "controlsPolitics");
-
-var checkboxPolitics = controlsPolitics.append("input")
-        .attr("type", "checkbox")
-        .property("checked", true);
-controlsPolitics.append("span")
-        .text("Politics");
-
-var controlsSocialMovements = d3.select("body").append("label")
-        .attr("id", "controlsSocialMovements");
-
-var checkboxSocialMovements = controlsSocialMovements.append("input")
-        .attr("type", "checkbox")
-        .property("checked", true);
-controlsSocialMovements.append("span")
-        .text("Social Movements");
+controlsPoliticsSocialMovements.append("span")
+        .text("Politics / Social Movements");
 
 var controlsTech = d3.select("body").append("label")
         .attr("id", "controlsTech");
@@ -414,7 +332,7 @@ function draw(nodes) {
           return function(d) {
             d.x += (x(d[xVar]) - d.x) * 0.1 * alpha;
             //controls y height
-            d.y += (220 - d.y) * 0.1 * alpha;
+            d.y += (250 - d.y) * 0.1 * alpha;
           };
         }
 
@@ -447,39 +365,29 @@ function draw(nodes) {
         }
 }
 
-d3.csv("CultureFresco2.csv", function(error, data) {
+d3.csv("CultureFresco2_2.csv", function(error, data) {
 
   var musicData = data.filter(function(d) { return d.PRIMARYCATEGORY === "Music" })
     , filmData = data.filter(function(d) { return d.PRIMARYCATEGORY === "Film" })
-    , tvData = data.filter(function(d) { return d.PRIMARYCATEGORY === "Tv" })
+    , artLiteratureData = data.filter(function(d) { return d.PRIMARYCATEGORY === "ArtLiterature" })
+    , tvEntertainmentMediaData = data.filter(function(d) { return d.PRIMARYCATEGORY === "TvEntertainmentMedia" })
     , advertisingData = data.filter(function(d) { return d.PRIMARYCATEGORY === "Advertising" })
-    , artData = data.filter(function(d) { return d.PRIMARYCATEGORY === "Art" })
-    , bookData = data.filter(function(d) { return d.PRIMARYCATEGORY === "Book" })
-    , entertainmentData = data.filter(function(d) { return d.PRIMARYCATEGORY === "Entertainment" })
-    , eventData = data.filter(function(d) { return d.PRIMARYCATEGORY === "Event" })
-    , fashionRetailData = data.filter(function(d) { return d.PRIMARYCATEGORY === "Fashion / Retail" })
-    , iconsData = data.filter(function(d) { return d.PRIMARYCATEGORY === "Icons" })
-    , mediaData = data.filter(function(d) { return d.PRIMARYCATEGORY === "Media" })
-    , politicsData = data.filter(function(d) { return d.PRIMARYCATEGORY === "Politics" })
-    , socialMovementsData = data.filter(function(d) { return d.PRIMARYCATEGORY === "Social Movements" })
-    , techData = data.filter(function(d) { return d.PRIMARYCATEGORY === "Tech" });
+    , fashionRetailData = data.filter(function(d) { return d.PRIMARYCATEGORY === "FashionRetail" })
+    , politicsSocialMovementsData = data.filter(function(d) { return d.PRIMARYCATEGORY === "PoliticsSocialMovements" })
+    , techData = data.filter(function(d) { return d.PRIMARYCATEGORY === "Tech" })
+    , iconsData = data.filter(function(d) { return d.PRIMARYCATEGORY === "Icons" });
 
   function update() {
 
     var film = checkboxFilm.node().checked
       , music = checkboxMusic.node().checked
-      , tv = checkboxTv.node().checked
+      , artLiterature = checkboxArtLiterature.node().checked
+      , tvEntertainmentMedia = checkboxTvEntertainmentMedia.node().checked
       , advertising = checkboxAdvertising.node().checked
-      , art = checkboxArt.node().checked
-      , book = checkboxBook.node().checked
-      , entertainment = checkboxEntertainment.node().checked
-      , events = checkboxEvent.node().checked
       , fashionRetail = checkboxFashionRetail.node().checked
-      , icons = checkboxIcons.node().checked
-      , media = checkboxMedia.node().checked
-      , politics = checkboxPolitics.node().checked
-      , socialMovements = checkboxSocialMovements.node().checked
+      , politicsSocialMovements = checkboxPoliticsSocialMovements.node().checked
       , tech = checkboxTech.node().checked
+      , icons = checkboxIcons.node().checked
       , list = [];
 
     if (film) {
@@ -488,41 +396,26 @@ d3.csv("CultureFresco2.csv", function(error, data) {
     if (music) {
       list = list.concat(musicData)
     }
-    if (tv) {
-      list = list.concat(tvData)
+    if (tvEntertainmentMedia) {
+      list = list.concat(tvEntertainmentMediaData)
     }
     if (advertising) {
       list = list.concat(advertisingData)
     }
-    if (art) {
-      list = list.concat(artData)
-    }
-    if (book) {
-      list = list.concat(bookData)
-    }
-    if (entertainment) {
-      list = list.concat(entertainmentData)
-    }
-    if (events) {
-      list = list.concat(eventData)
+    if (artLiterature) {
+      list = list.concat(artLiteratureData)
     }
     if (fashionRetail) {
       list = list.concat(fashionRetailData)
     }
-    if (icons) {
-      list = list.concat(iconsData)
-    }
-    if (media) {
-      list = list.concat(mediaData)
-    }
-    if (politics) {
-      list = list.concat(politicsData)
-    }
-    if (socialMovements) {
-      list = list.concat(socialMovementsData)
+    if (politicsSocialMovements) {
+      list = list.concat(politicsSocialMovementsData)
     }
     if (tech) {
       list = list.concat(techData)
+    }
+    if (icons) {
+      list = list.concat(iconsData)
     }
 
     draw(list);
@@ -531,20 +424,15 @@ d3.csv("CultureFresco2.csv", function(error, data) {
 
   d3.select("#controlsFilm").on("change", update);
   d3.select("#controlsMusic").on("change", update);
-  d3.select("#controlsTv").on("change", update);
+  d3.select("#controlsTvEntertainmentMedia").on("change", update);
   d3.select("#controlsAdvertising").on("change", update);
-  d3.select("#controlsArt").on("change", update);
-  d3.select("#controlsBook").on("change", update);
-  d3.select("#controlsEntertainment").on("change", update);
-  d3.select("#controlsEvent").on("change", update);
+  d3.select("#controlsArtLiterature").on("change", update);;
   d3.select("#controlsFashionRetail").on("change", update);
   d3.select("#controlsIcons").on("change", update);
-  d3.select("#controlsMedia").on("change", update);
-  d3.select("#controlsPolitics").on("change", update);
-  d3.select("#controlsSocialMovements").on("change", update);
+  d3.select("#controlsPoliticsSocialMovements").on("change", update);
   d3.select("#controlsTech").on("change", update);
 
-  draw(musicData.concat(filmData).concat(tvData).concat(advertisingData).concat(artData).concat(bookData).concat(entertainmentData).concat(eventData).concat(fashionRetailData).concat(iconsData).concat(mediaData).concat(politicsData).concat(socialMovementsData).concat(techData));
+  draw(musicData.concat(filmData).concat(tvEntertainmentMediaData).concat(advertisingData).concat(artLiteratureData).concat(fashionRetailData).concat(iconsData).concat(politicsSocialMovementsData).concat(techData));
 
 });
 
