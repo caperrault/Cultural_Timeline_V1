@@ -117,7 +117,7 @@ input {
   margin: 4px 4px 0;
 }
 
-div.mapTooltip {
+div.mapTooltip1 {
   width: 250px;
   position: absolute;
   text-align: left;
@@ -130,6 +130,20 @@ div.mapTooltip {
   border: 0;
   pointer-events: none;
   display : block;
+}
+
+div.mapTooltip2 {
+  position: absolute;
+  text-align: center;
+  color: white;
+  height: 20px;
+  padding: 10px 10px 2px 10px;
+  font-size: 10px;
+  font-weight: bold;
+  background: #444;
+  border: 3px;
+  border-radius: 2px;
+  pointer-events: none;
 }
 
 .displayed {
@@ -173,6 +187,7 @@ var y = d3.scale.linear()
 
 var xAxis = d3.svg.axis()
     .scale(x)
+    .ticks(10)
     .orient("top")
     .tickFormat(d3.format(""));
 
@@ -182,10 +197,6 @@ var svg = d3.select("body").append("svg")
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     // .call(zoom);
-
-var div = d3.select("body").append("div")
-              .attr("class", "mapTooltip")
-              .style("opacity", 0);
 
 var controlsFilm = d3.select("body").append("label")
     .attr("id", "controlsFilm");
@@ -268,8 +279,16 @@ var checkboxTech = controlsTech.append("input")
 controlsTech.append("span")
         .text("Technology");
 
+var div1 = d3.select("body").append("div")
+              .attr("class", "mapTooltip1")
+              .style("opacity", 0);
+
+var div2 = d3.select("body").append("div")
+              .attr("class", "mapTooltip2")
+              .style("opacity", 0);
+
 x.domain([1980,2019]);
-y.domain([0,9]);
+//y.domain([0,9]);
 
 svg.append("g")
    .attr("class", "x axis")
@@ -278,6 +297,70 @@ svg.append("g")
 
 var xVar = "YEAR",
     node;
+
+svg.append("text")
+        .attr("text-anchor", "left")
+        .style("fill", "white")
+        .attr("x","-15")
+        .attr("y","110")
+        .attr("font-size", "10px")
+        .text("'A material world'");
+
+svg.append("text")
+        .attr("text-anchor", "left")
+        .style("fill", "white")
+        .attr("x","148")
+        .attr("y","110")
+        .attr("font-size", "10px")
+        .text("'The rise of Gen X'");
+
+svg.append("text")
+        .attr("text-anchor", "left")
+        .style("fill", "white")
+        .attr("x","312")
+        .attr("y","110")
+        .attr("font-size", "10px")
+        .text("'The World Wide Web'");
+
+svg.append("text")
+        .attr("text-anchor", "left")
+        .style("fill", "white")
+        .attr("x","476")
+        .attr("y","110")
+        .attr("font-size", "10px")
+        .text("'Looking into the Matrix'");
+
+svg.append("text")
+        .attr("text-anchor", "left")
+        .style("fill", "white")
+        .attr("x","640")
+        .attr("y","110")
+        .attr("font-size", "10px")
+        .text("'Age of dark truth'");
+
+svg.append("text")
+        .attr("text-anchor", "left")
+        .style("fill", "white")
+        .attr("x","804")
+        .attr("y","110")
+        .attr("font-size", "10px")
+        .text("'Age of togetherness'");
+
+  svg.append("text")
+          .attr("text-anchor", "left")
+          .style("fill", "white")
+          .attr("x","968")
+          .attr("y","110")
+          .attr("font-size", "10px")
+          .text("'Going to other worlds'");
+
+  svg.append("text")
+          .attr("text-anchor", "left")
+          .style("fill", "white")
+          .attr("x","1132")
+          .attr("y","110")
+          .attr("font-size", "10px")
+          .text("'To be devised'");
 
 function draw(nodes) {
 
@@ -304,14 +387,21 @@ function draw(nodes) {
           var newNode = node.enter().append("g")
                   .attr("class", "node")
                   .style("cursor", "pointer")
+                  .on("mouseover", function(d) {
+                      div2.transition().duration(300).style("opacity", 1);
+                      div2.text(d.TITLE + " (" + d.YEAR + ")")
+                      .style("left", (d3.event.pageX) + "px")
+                      .style("top", (d3.event.pageY-10) + "px");
+                    })
                   .on("click", function(d) {
-                                     div.transition().duration(300).style("opacity", 1);
-                                    //  div.html("<img src=" + d.IMAGE + " width=250 > <br><p style = padding-left:5px;font-weight:bold>"  + d.TITLE + " (" + d.YEAR + ")</p><p style = padding-left:5px;font-size:10>" + d.DESCRIPTION + "</p><a href='" + d.SOURCE + "' style=padding-left:5px;text-decoration:underline;font-size:10;>Source</a>")
-                                     div.html("<img src=" + d.IMAGE + " width=250 > <br><p style = padding-left:5px;font-weight:bold>"  + d.TITLE + " (" + d.YEAR + ")</p><p style = padding-left:5px;font-size:10>" + d.DESCRIPTION + "</p><p style=padding-left:5px;text-decoration:underline;font-size:10;>Source</p>")
-                                     .style("left", (d3.event.pageX) + "px")
-                                     .style("top", (d3.event.pageY-10) + "px");
-                                  })
-                  .on("mouseout", function (d) { div.transition().delay(1500).duration(300).style("opacity", 0);})
+                       div1.transition().duration(300).style("opacity", 1);
+                      //  div.html("<img src=" + d.IMAGE + " width=250 > <br><p style = padding-left:5px;font-weight:bold>"  + d.TITLE + " (" + d.YEAR + ")</p><p style = padding-left:5px;font-size:10>" + d.DESCRIPTION + "</p><a href='" + d.SOURCE + "' style=padding-left:5px;text-decoration:underline;font-size:10;>Source</a>")
+                       div1.html("<img src=" + d.IMAGE + " width=250 > <br><p style = padding-left:5px;font-weight:bold>"  + d.TITLE + " (" + d.YEAR + ")</p><p style = padding-left:5px;font-size:10>" + d.DESCRIPTION + "</p><p style=padding-left:5px;text-decoration:underline;font-size:10;>Source</p>")
+                       .style("left", (d3.event.pageX) + "px")
+                       .style("top", (d3.event.pageY-10) + "px");
+                    })
+                  .on("mouseout", function (d) { div1.transition().delay(1500).duration(300).style("opacity", 0);
+                                                 div2.transition().duration(300).style("opacity", 0);})
                   .call(force.drag);
 
           newNode.append("image")
