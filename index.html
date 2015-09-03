@@ -20,18 +20,22 @@ p {
   font-weight: 100;
 }
 
-.axis {
+.x1_axis text {
   fill: #fff;
 }
 
-.x_axis text {
+.x2_axis text {
   fill: #fff;
+  font-weight: 100;
+  font-size: 10px;
+  text-align: left;
 }
 
-.axis path,
-.axis line {
+.x2_axis path,
+.x2_axis line {
   fill: none;
   stroke: none;
+  /*stroke-width: 1;*/
   shape-rendering: crispEdges;
 }
 
@@ -195,8 +199,11 @@ var margin = {top: 0, right: 20, bottom: 30, left: 100},
 //         .scaleExtent([1, 10])
 //         .on("zoom", zoomed);
 
-var x = d3.scale.linear()
+var x1 = d3.scale.linear()
     .range([0, width]);
+
+var x2 = d3.scale.ordinal()
+    .rangePoints([0, width-130]);
 
 var y = d3.scale.linear()
     .range([height, 70]);
@@ -289,13 +296,13 @@ var checkboxTech = controlsTech.append("input")
 controlsTech.append("span")
         .text("Technology");
 
-var controlsTech = d3.select("body").append("label")
-        .attr("id", "buttonTest");
-
-var checkboxTech = controlsTech.append("input")
-        .attr("type", "button");
-controlsTech.append("span")
-        .text("Rescale 1980-1985");
+// var controlsTech = d3.select("body").append("label")
+//         .attr("id", "buttonTest");
+//
+// var checkboxTech = controlsTech.append("input")
+//         .attr("type", "button");
+// controlsTech.append("span")
+//         .text("Back to initial scale");
 
 var div1 = d3.select("body").append("div")
               .attr("class", "mapTooltip1")
@@ -310,85 +317,229 @@ var div2 = d3.select("body").append("div")
 var xVar = "YEAR",
     node;
 
-svg.append("text")
-        .attr("text-anchor", "left")
-        .style("fill", "white")
-        .attr("x","-15")
-        .attr("y","110")
-        .attr("font-size", "10px")
-        .text("'A material world'");
-
-svg.append("text")
-        .attr("text-anchor", "left")
-        .style("fill", "white")
-        .attr("x","148")
-        .attr("y","110")
-        .attr("font-size", "10px")
-        .text("'The rise of Gen X'");
-
-svg.append("text")
-        .attr("text-anchor", "left")
-        .style("fill", "white")
-        .attr("x","312")
-        .attr("y","110")
-        .attr("font-size", "10px")
-        .text("'The World Wide Web'");
-
-svg.append("text")
-        .attr("text-anchor", "left")
-        .style("fill", "white")
-        .attr("x","476")
-        .attr("y","110")
-        .attr("font-size", "10px")
-        .text("'Looking into the Matrix'");
-
-svg.append("text")
-        .attr("text-anchor", "left")
-        .style("fill", "white")
-        .attr("x","640")
-        .attr("y","110")
-        .attr("font-size", "10px")
-        .text("'Age of dark truth'");
-
-svg.append("text")
-        .attr("text-anchor", "left")
-        .style("fill", "white")
-        .attr("x","804")
-        .attr("y","110")
-        .attr("font-size", "10px")
-        .text("'Age of togetherness'");
-
-  svg.append("text")
-          .attr("text-anchor", "left")
-          .style("fill", "white")
-          .attr("x","968")
-          .attr("y","110")
-          .attr("font-size", "10px")
-          .text("'Going to other worlds'");
-
-  svg.append("text")
-          .attr("text-anchor", "left")
-          .style("fill", "white")
-          .attr("x","1132")
-          .attr("y","110")
-          .attr("font-size", "10px")
-          .text("'To be devised'");
-
-
 d3.csv("CultureFresco2_2.csv", function(error, data) {
 
-  var xAxis = d3.svg.axis()
-      .scale(x)
+  var x1Axis = d3.svg.axis()
+      .scale(x1)
       .ticks(10)
       .orient("top")
       .tickFormat(d3.format(""));
 
-    x.domain([1980,2019]);
+  var x2Axis = d3.svg.axis()
+      .scale(x2)
+      .ticks(5)
+      .orient("top");
 
-    svg.append("g")
-       .attr("class", "x_axis")
-       .attr("transform", "translate(0,100)")
-       .call(xAxis)
+    x1.domain([1980,2019]);
+
+    var x2Axis = d3.svg.axis()
+        .scale(x2)
+        .ticks(30)
+        .orient("top");
+
+    x2.domain(["'A material world'","'The rise of Gen X'","'The World Wide Web'","'Looking into the Matrix'","'Age of dark truth'","'Age of togetherness'","'Going to other worlds'","'To be devised'"]);
+
+      svg.append("g")
+         .attr("class", "x1_axis")
+         .attr("transform", "translate(0,100)")
+         .call(x1Axis)
+       .selectAll("text")
+        .attr("x", -20)
+        .style("text-anchor", "start");
+
+       svg.append("g")
+          .attr("class", "x2_axis")
+          .attr("transform", "translate(0,120)")
+          .attr("text-anchor", "end")
+          .call(x2Axis)
+        .selectAll("text")
+         .attr("x", -20)
+         .style("cursor", "pointer")
+         .style("text-anchor", "start")
+         .on("click", function(d) {
+           if (d === "'A material world'") {
+
+                   x1.range([0, width-20])
+                    .domain([1980,1985.1]);
+
+                   x2.rangePoints([0, width-45])
+                      .domain(["'A material world'","'The rise of Gen X'"]);
+
+                   x1Axis.ticks(5);
+                   x2Axis.ticks(3);
+
+                   svg.select(".x1_axis") // change the x axis
+                     .transition().duration(1500).ease("sin-in-out")
+                     .call(x1Axis)
+                     .selectAll("text")
+                     .attr("x", -20)
+                     .style("text-anchor", "start"); // change the x axis;
+
+                   svg.select(".x2_axis")
+                     .transition().duration(1500).ease("sin-in-out")
+                     .call(x2Axis)
+                     .selectAll("text")
+                     .attr("x", -20)
+                     .style("text-anchor", "start"); // change the x axis;
+           }
+
+           else if (d === "'The rise of Gen X'") {
+
+                    x1.range([0, width-20])
+                     .domain([1985,1990.1]);
+
+                    x2.rangePoints([0, width-45])
+                       .domain(["'The rise of Gen X'","'The World Wide Web'"]);
+
+                    x1Axis.ticks(5);
+                    x2Axis.ticks(3);
+
+                    svg.select(".x1_axis") // change the x axis
+                      .transition().duration(1500).ease("sin-in-out")
+                      .call(x1Axis)
+                      .selectAll("text")
+                      .attr("x", -20)
+                      .style("text-anchor", "start"); // change the x axis;
+
+                    svg.select(".x2_axis")
+                      .transition().duration(1500).ease("sin-in-out")
+                      .call(x2Axis)
+                      .selectAll("text")
+                      .attr("x", -20)
+                      .style("text-anchor", "start"); // change the x axis;
+            }
+
+          else if (d === "'The World Wide Web'") {
+
+                   x1.range([0, width-20])
+                    .domain([1990,1995.1]);
+
+                   x2.rangePoints([0, width-45])
+                      .domain(["'The World Wide Web'","'Looking into the Matrix'"]);
+
+                   x1Axis.ticks(5);
+                   x2Axis.ticks(3);
+
+                   svg.select(".x1_axis") // change the x axis
+                     .transition().duration(1500).ease("sin-in-out")
+                     .call(x1Axis)
+                     .selectAll("text")
+                     .attr("x", -20)
+                     .style("text-anchor", "start"); // change the x axis;
+
+                   svg.select(".x2_axis")
+                     .transition().duration(1500).ease("sin-in-out")
+                     .call(x2Axis)
+                     .selectAll("text")
+                     .attr("x", -20)
+                     .style("text-anchor", "start"); // change the x axis;
+           }
+
+           else if (d === "'Looking into the Matrix'") {
+
+                    x1.range([0, width-20])
+                     .domain([1995,2000.1]);
+
+                    x2.rangePoints([0, width-45])
+                       .domain(["'Looking into the Matrix'","'Age of dark truth'"]);
+
+                    x1Axis.ticks(5);
+                    x2Axis.ticks(3);
+
+                    svg.select(".x1_axis") // change the x axis
+                      .transition().duration(1500).ease("sin-in-out")
+                      .call(x1Axis)
+                      .selectAll("text")
+                      .attr("x", -20)
+                      .style("text-anchor", "start"); // change the x axis;
+
+                    svg.select(".x2_axis")
+                      .transition().duration(1500).ease("sin-in-out")
+                      .call(x2Axis)
+                      .selectAll("text")
+                      .attr("x", -20)
+                      .style("text-anchor", "start"); // change the x axis;
+            }
+
+            else if (d === "'Age of dark truth'") {
+
+                     x1.range([0, width-20])
+                      .domain([2000,2005.1]);
+
+                     x2.rangePoints([0, width-45])
+                        .domain(["'Age of dark truth'","'Age of togetherness'"]);
+
+                     x1Axis.ticks(5);
+                     x2Axis.ticks(3);
+
+                     svg.select(".x1_axis") // change the x axis
+                       .transition().duration(1500).ease("sin-in-out")
+                       .call(x1Axis)
+                       .selectAll("text")
+                       .attr("x", -20)
+                       .style("text-anchor", "start"); // change the x axis;
+
+                     svg.select(".x2_axis")
+                       .transition().duration(1500).ease("sin-in-out")
+                       .call(x2Axis)
+                       .selectAll("text")
+                       .attr("x", -20)
+                       .style("text-anchor", "start"); // change the x axis;
+             }
+
+             else if (d === "'Age of togetherness'") {
+
+                      x1.range([0, width-20])
+                       .domain([2005,2010.1]);
+
+                      x2.rangePoints([0, width-45])
+                         .domain(["'Age of togetherness'","'Going to other worlds'"]);
+
+                      x1Axis.ticks(5);
+                      x2Axis.ticks(3);
+
+                      svg.select(".x1_axis") // change the x axis
+                        .transition().duration(1500).ease("sin-in-out")
+                        .call(x1Axis)
+                        .selectAll("text")
+                        .attr("x", -20)
+                        .style("text-anchor", "start"); // change the x axis;
+
+                      svg.select(".x2_axis")
+                        .transition().duration(1500).ease("sin-in-out")
+                        .call(x2Axis)
+                        .selectAll("text")
+                        .attr("x", -20)
+                        .style("text-anchor", "start"); // change the x axis;
+              }
+
+              else if (d === "'Going to other worlds'") {
+
+                       x1.range([0, width-20])
+                        .domain([2010,2015.1]);
+
+                       x2.rangePoints([0, width-45])
+                          .domain(["'Going to other worlds'","'To be devised'"]);
+
+                       x1Axis.ticks(5);
+                       x2Axis.ticks(3);
+
+                       svg.select(".x1_axis") // change the x axis
+                         .transition().duration(1500).ease("sin-in-out")
+                         .call(x1Axis)
+                         .selectAll("text")
+                         .attr("x", -20)
+                         .style("text-anchor", "start"); // change the x axis;
+
+                       svg.select(".x2_axis")
+                         .transition().duration(1500).ease("sin-in-out")
+                         .call(x2Axis)
+                         .selectAll("text")
+                         .attr("x", -20)
+                         .style("text-anchor", "start"); // change the x axis;
+               }
+
+         });
 
   var musicData = data.filter(function(d) { return d.PRIMARYCATEGORY === "Music" })
     , filmData = data.filter(function(d) { return d.PRIMARYCATEGORY === "Film" })
@@ -457,15 +608,6 @@ d3.csv("CultureFresco2_2.csv", function(error, data) {
 
   draw(musicData.concat(filmData).concat(tvEntertainmentMediaData).concat(advertisingData).concat(artLiteratureData).concat(fashionRetailData).concat(iconsData).concat(politicsSocialMovementsData).concat(techData));
 
-  d3.select("#buttonTest").on("click", function() {
-            x.domain([1980,1985.1]);
-
-            xAxis.ticks(5)
-
-            svg.select(".x_axis") // change the x axis
-              .transition().duration(1500).ease("sin-in-out")
-                .call(xAxis);
-  });
 
 });
 
@@ -527,7 +669,7 @@ function draw(nodes) {
 
         function moveTowardDataPosition(alpha) {
           return function(d) {
-            d.x += (x(d[xVar]) - d.x) * 0.1 * alpha;
+            d.x += (x1(d[xVar]) - d.x) * 0.1 * alpha;
             //controls y height
             d.y += (300 - d.y) * 0.1 * alpha;
           };
