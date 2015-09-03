@@ -9,8 +9,11 @@ body {
 
 h1 {
   color: #fff;
-  margin-left: 90px;
-  font-weight: 200;
+  margin-left: 85px;
+  margin-top: 60px;
+  margin-bottom: -20px;
+  font-size: 30px;
+  font-weight: 300;
 }
 
 p {
@@ -18,6 +21,10 @@ p {
 }
 
 .axis {
+  fill: #fff;
+}
+
+.x_axis text {
   fill: #fff;
 }
 
@@ -35,7 +42,7 @@ p {
 #controlsFilm {
   font-size: 14px;
   position: absolute;
-  top: 520px;
+  top: 625px;
   left: 90px;
   color: white;
   font: 10px sans-serif;
@@ -44,7 +51,7 @@ p {
 #controlsMusic {
   font-size: 14px;
   position: absolute;
-  top: 550px;
+  top: 650px;
   left: 90px;
   color: white;
   font: 10px sans-serif;
@@ -53,7 +60,7 @@ p {
 #controlsArtLiterature {
   font-size: 14px;
   position: absolute;
-  top: 575px;
+  top: 675px;
   left: 90px;
   color: white;
   font: 10px sans-serif;
@@ -62,7 +69,7 @@ p {
 #controlsTvEntertainmentMedia {
   font-size: 14px;
   position: absolute;
-  top: 525px;
+  top: 625px;
   left: 250px;
   color: white;
   font: 10px sans-serif;
@@ -71,7 +78,7 @@ p {
 #controlsAdvertising {
   font-size: 14px;
   position: absolute;
-  top: 550px;
+  top: 650px;
   left: 250px;
   color: white;
   font: 10px sans-serif;
@@ -80,7 +87,7 @@ p {
 #controlsFashionRetail {
   font-size: 14px;
   position: absolute;
-  top: 575px;
+  top: 675px;
   left: 250px;
   color: white;
   font: 10px sans-serif;
@@ -89,7 +96,7 @@ p {
 #controlsPoliticsSocialMovements {
   font-size: 14px;
   position: absolute;
-  top: 525px;
+  top: 625px;
   left: 410px;
   color: white;
   font: 10px sans-serif;
@@ -98,7 +105,7 @@ p {
 #controlsTech {
   font-size: 14px;
   position: absolute;
-  top: 550px;
+  top: 650px;
   left: 410px;
   color: white;
   font: 10px sans-serif;
@@ -107,8 +114,17 @@ p {
 #controlsIcons {
   font-size: 14px;
   position: absolute;
-  top: 575px;
+  top: 675px;
   left: 410px;
+  color: white;
+  font: 10px sans-serif;
+}
+
+#buttonTest {
+  font-size: 14px;
+  position: absolute;
+  top: 700px;
+  left: 90px;
   color: white;
   font: 10px sans-serif;
 }
@@ -184,12 +200,6 @@ var x = d3.scale.linear()
 
 var y = d3.scale.linear()
     .range([height, 70]);
-
-var xAxis = d3.svg.axis()
-    .scale(x)
-    .ticks(10)
-    .orient("top")
-    .tickFormat(d3.format(""));
 
 var svg = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
@@ -279,6 +289,14 @@ var checkboxTech = controlsTech.append("input")
 controlsTech.append("span")
         .text("Technology");
 
+var controlsTech = d3.select("body").append("label")
+        .attr("id", "buttonTest");
+
+var checkboxTech = controlsTech.append("input")
+        .attr("type", "button");
+controlsTech.append("span")
+        .text("Rescale 1980-1985");
+
 var div1 = d3.select("body").append("div")
               .attr("class", "mapTooltip1")
               .style("opacity", 0);
@@ -287,13 +305,7 @@ var div2 = d3.select("body").append("div")
               .attr("class", "mapTooltip2")
               .style("opacity", 0);
 
-x.domain([1980,2019]);
-//y.domain([0,9]);
-
-svg.append("g")
-   .attr("class", "x axis")
-   .attr("transform", "translate(0,100)")
-   .call(xAxis)
+//x.domain([1980,2019]);
 
 var xVar = "YEAR",
     node;
@@ -362,100 +374,21 @@ svg.append("text")
           .attr("font-size", "10px")
           .text("'To be devised'");
 
-function draw(nodes) {
-
-          var force = d3.layout.force()
-            .nodes(nodes)
-            .size([width, height])
-            .on("tick", tick)
-            .charge(-0.01)
-            .gravity(0)
-            .start();
-
-        function tick(e) {
-
-          // Set initial positions
-        nodes.forEach(function(d) {
-            // d.x = x(d[xVar]);
-            // d.y = y(d[yVar-1]);
-            d.radius = radius;
-          });
-
-          var node = svg.selectAll(".node")
-                        .data(nodes, function(d) {return d.IMAGE;});
-
-          var newNode = node.enter().append("g")
-                  .attr("class", "node")
-                  .style("cursor", "pointer")
-                  .on("mouseover", function(d) {
-                      div2.transition().duration(300).style("opacity", 1);
-                      div2.text(d.TITLE + " (" + d.YEAR + ")")
-                      .style("left", (d3.event.pageX) + "px")
-                      .style("top", (d3.event.pageY-10) + "px");
-                    })
-                  .on("click", function(d) {
-                       div1.transition().duration(300).style("opacity", 1);
-                      //  div.html("<img src=" + d.IMAGE + " width=250 > <br><p style = padding-left:5px;font-weight:bold>"  + d.TITLE + " (" + d.YEAR + ")</p><p style = padding-left:5px;font-size:10>" + d.DESCRIPTION + "</p><a href='" + d.SOURCE + "' style=padding-left:5px;text-decoration:underline;font-size:10;>Source</a>")
-                       div1.html("<img src=" + d.IMAGE + " width=250 > <br><p style = padding-left:5px;font-weight:bold>"  + d.TITLE + " (" + d.YEAR + ")</p><p style = padding-left:5px;font-size:10>" + d.DESCRIPTION + "</p><p style=padding-left:5px;text-decoration:underline;font-size:10;>Source</p>")
-                       .style("left", (d3.event.pageX) + "px")
-                       .style("top", (d3.event.pageY-10) + "px");
-                    })
-                  .on("mouseout", function (d) { div1.transition().delay(1500).duration(300).style("opacity", 0);
-                                                 div2.transition().duration(300).style("opacity", 0);})
-                  .call(force.drag);
-
-          newNode.append("image")
-              .attr("xlink:href", function(d) { return d.IMAGE; })
-              .attr("x", -8)
-              .attr("y", -8)
-              .attr("width", 30)
-              .attr("height", 30);
-
-        node.exit().remove();
-
-          node.each(moveTowardDataPosition(e.alpha));
-          node.each(collide(e.alpha));
-          node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
-        }
-
-        function moveTowardDataPosition(alpha) {
-          return function(d) {
-            d.x += (x(d[xVar]) - d.x) * 0.1 * alpha;
-            //controls y height
-            d.y += (250 - d.y) * 0.1 * alpha;
-          };
-        }
-
-        // Resolve collisions between nodes.
-        function collide(alpha) {
-          var quadtree = d3.geom.quadtree(nodes);
-          return function(d) {
-            var r = d.radius + radius + padding,
-                nx1 = d.x - r,
-                nx2 = d.x + r,
-                ny1 = d.y - r,
-                ny2 = d.y + r;
-            quadtree.visit(function(quad, x1, y1, x2, y2) {
-              if (quad.point && (quad.point !== d)) {
-                var x = d.x - quad.point.x,
-                    y = d.y - quad.point.y,
-                    l = Math.sqrt(x * x + y * y),
-                    r = d.radius + quad.point.radius + padding;
-                if (l < r) {
-                  l = (l - r) / l * alpha;
-                  d.x -= x *= l;
-                  d.y -= y *= l;
-                  quad.point.x += x;
-                  quad.point.y += y;
-                }
-              }
-              return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
-            });
-          };
-        }
-}
 
 d3.csv("CultureFresco2_2.csv", function(error, data) {
+
+  var xAxis = d3.svg.axis()
+      .scale(x)
+      .ticks(10)
+      .orient("top")
+      .tickFormat(d3.format(""));
+
+    x.domain([1980,2019]);
+
+    svg.append("g")
+       .attr("class", "x_axis")
+       .attr("transform", "translate(0,100)")
+       .call(xAxis)
 
   var musicData = data.filter(function(d) { return d.PRIMARYCATEGORY === "Music" })
     , filmData = data.filter(function(d) { return d.PRIMARYCATEGORY === "Film" })
@@ -524,7 +457,111 @@ d3.csv("CultureFresco2_2.csv", function(error, data) {
 
   draw(musicData.concat(filmData).concat(tvEntertainmentMediaData).concat(advertisingData).concat(artLiteratureData).concat(fashionRetailData).concat(iconsData).concat(politicsSocialMovementsData).concat(techData));
 
+  d3.select("#buttonTest").on("click", function() {
+            x.domain([1980,1985.1]);
+
+            xAxis.ticks(5)
+
+            svg.select(".x_axis") // change the x axis
+              .transition().duration(1500).ease("sin-in-out")
+                .call(xAxis);
+  });
+
 });
+
+function draw(nodes) {
+
+          var force = d3.layout.force()
+            .nodes(nodes)
+            .size([width, height])
+            .on("tick", tick)
+            .charge(-0.01)
+            .gravity(0)
+            .start();
+
+        function tick(e) {
+
+          // Set initial positions
+        nodes.forEach(function(d) {
+            // d.x = x(d[xVar]);
+            // d.y = y(d[yVar-1]);
+            d.radius = radius;
+          });
+
+          var node = svg.selectAll(".node")
+                        .data(nodes, function(d) {return d.IMAGE;});
+
+          var newNode = node.enter().append("g")
+                  .attr("class", "node")
+                  .style("cursor", "pointer")
+                  .on("mouseover", function(d) {
+                      div2.transition().duration(300).style("opacity", 1);
+                      div2.text(d.TITLE + " (" + d.YEAR + ")")
+                      .style("left", (d3.event.pageX) + "px")
+                      .style("top", (d3.event.pageY-10) + "px");
+                    })
+                  .on("click", function(d) {
+                       div1.transition().duration(300).style("opacity", 1);
+                      //  div.html("<img src=" + d.IMAGE + " width=250 > <br><p style = padding-left:5px;font-weight:bold>"  + d.TITLE + " (" + d.YEAR + ")</p><p style = padding-left:5px;font-size:10>" + d.DESCRIPTION + "</p><a href='" + d.SOURCE + "' style=padding-left:5px;text-decoration:underline;font-size:10;>Source</a>")
+                       div1.html("<img src=" + d.IMAGE + " width=250 > <br><p style = padding-left:5px;font-weight:bold>"  + d.TITLE + " (" + d.YEAR + ")</p><p style = padding-left:5px;font-size:10>" + d.DESCRIPTION + "</p><p style=padding-left:5px;text-decoration:underline;font-size:10;>Source</p>")
+                       .style("left", (d3.event.pageX) + "px")
+                       .style("top", (d3.event.pageY-10) + "px");
+                    })
+                  .on("mouseout", function (d) { div1.transition().delay(1500).duration(300).style("opacity", 0);
+                                                 div2.transition().duration(300).style("opacity", 0);})
+                  .call(force.drag);
+
+          newNode.append("image")
+              .attr("xlink:href", function(d) { return d.IMAGE; })
+              .attr("x", -8)
+              .attr("y", -8)
+              .attr("width", 30)
+              .attr("height", 30);
+
+        node.exit().remove();
+
+          node.each(moveTowardDataPosition(e.alpha));
+          node.each(collide(e.alpha));
+          node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+        }
+
+        function moveTowardDataPosition(alpha) {
+          return function(d) {
+            d.x += (x(d[xVar]) - d.x) * 0.1 * alpha;
+            //controls y height
+            d.y += (300 - d.y) * 0.1 * alpha;
+          };
+        }
+
+        // Resolve collisions between nodes.
+        function collide(alpha) {
+          var quadtree = d3.geom.quadtree(nodes);
+          return function(d) {
+            var r = d.radius + radius + padding,
+                nx1 = d.x - r,
+                nx2 = d.x + r,
+                ny1 = d.y - r,
+                ny2 = d.y + r;
+            quadtree.visit(function(quad, x1, y1, x2, y2) {
+              if (quad.point && (quad.point !== d)) {
+                var x = d.x - quad.point.x,
+                    y = d.y - quad.point.y,
+                    l = Math.sqrt(x * x + y * y),
+                    r = d.radius + quad.point.radius + padding;
+                if (l < r) {
+                  l = (l - r) / l * alpha;
+                  d.x -= x *= l;
+                  d.y -= y *= l;
+                  quad.point.x += x;
+                  quad.point.y += y;
+                }
+              }
+              return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
+            });
+          };
+        }
+}
+
 
 // function zoomed() {
 // svg.attr("transform", "scale(" + d3.event.scale + ")");
