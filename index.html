@@ -14,6 +14,7 @@ h1 {
   margin-bottom: -20px;
   font-size: 30px;
   font-weight: 300;
+  cursor: default;
 }
 
 p {
@@ -22,6 +23,7 @@ p {
 
 .x1_axis text {
   fill: #fff;
+  cursor: default;
 }
 
 .x2_axis text {
@@ -61,97 +63,89 @@ p {
 }
 
 #controlsFilm {
-  font-size: 14px;
   position: absolute;
   top: 625px;
-  left: 95px;
+  left: 85px;
   color: white;
   font: 10px sans-serif;
+  cursor: pointer;
 }
 
 #controlsMusic {
-  font-size: 14px;
   position: absolute;
   top: 650px;
-  left: 95px;
+  left: 85px;
   color: white;
   font: 10px sans-serif;
+  cursor: pointer;
 }
 
 #controlsArtLiterature {
-  font-size: 14px;
   position: absolute;
   top: 675px;
-  left: 95px;
+  left: 85px;
   color: white;
   font: 10px sans-serif;
+  cursor: pointer;
 }
 
 #controlsTvEntertainmentMedia {
-  font-size: 14px;
   position: absolute;
   top: 625px;
-  left: 252px;
+  left: 250px;
   color: white;
   font: 10px sans-serif;
+  cursor: pointer;
 }
 
 #controlsAdvertising {
-  font-size: 14px;
   position: absolute;
   top: 650px;
-  left: 252px;
+  left: 250px;
   color: white;
   font: 10px sans-serif;
+  cursor: pointer;
 }
 
 #controlsFashionRetail {
-  font-size: 14px;
   position: absolute;
   top: 675px;
-  left: 252px;
+  left: 250px;
   color: white;
   font: 10px sans-serif;
+  cursor: pointer;
 }
 
 #controlsPoliticsSocialMovements {
-  font-size: 14px;
   position: absolute;
   top: 625px;
-  left: 412px;
+  left: 413px;
   color: white;
   font: 10px sans-serif;
+  cursor: pointer;
 }
 
 #controlsTech {
-  font-size: 14px;
   position: absolute;
   top: 650px;
-  left: 412px;
+  left: 413px;
   color: white;
   font: 10px sans-serif;
+  cursor: pointer;
 }
 
 #controlsIcons {
-  font-size: 14px;
   position: absolute;
   top: 675px;
-  left: 412px;
+  left: 413px;
   color: white;
   font: 10px sans-serif;
-}
-
-#buttonTest {
-  font-size: 14px;
-  position: absolute;
-  top: 700px;
-  left: 90px;
-  color: white;
-  font: 10px sans-serif;
+  cursor: pointer;
 }
 
 input {
   margin: 4px 4px 0;
+  cursor: pointer;
 }
 
 div.mapTooltip1 {
@@ -183,8 +177,6 @@ div.mapTooltip2 {
   pointer-events: none;
 }
 
-
-
 .displayed {
   opacity: 1;
 }
@@ -192,6 +184,44 @@ div.mapTooltip2 {
 .notDisplayed {
   opacity: 0;
 }
+
+#themesTitle {
+  position: absolute;
+  top: 620px;
+  left: 909px;
+  color: white;
+  font: 10px sans-serif;
+  cursor: default;
+}
+
+.themes {
+  font-size: 14px;
+  position: absolute;
+  color: white;
+  font: 10px sans-serif;
+  left: 1073px;
+}
+
+#theme1 {
+  top: 620px;
+}
+
+#theme2 {
+  top: 645px;
+}
+
+#theme3 {
+  top: 670px;
+}
+
+.themes {
+  cursor: pointer;
+}
+
+.themes:hover {
+  color: red;
+}
+
 
 </style>
 
@@ -204,6 +234,14 @@ div.mapTooltip2 {
 
 <p id="backButton" class="notDisplayed"> Back to initial scale </p>
 
+<p id="themesTitle" > Themes </p>
+
+<p id="theme1" class="themes"> Theme 1 </p>
+
+<p id="theme2" class="themes"> Theme 2 </p>
+
+<p id="theme3" class="themes"> Theme 3 </p>
+
 <script>
 
 var margin = {top: 0, right: 20, bottom: 30, left: 100},
@@ -211,10 +249,6 @@ var margin = {top: 0, right: 20, bottom: 30, left: 100},
     height = 600 - margin.top - margin.bottom,
     padding = 1,
     radius = 16;
-
-// var zoom = d3.behavior.zoom()
-//         .scaleExtent([1, 10])
-//         .on("zoom", zoomed);
 
 var x1 = d3.scale.linear()
     .range([0, width]);
@@ -230,7 +264,6 @@ var svg = d3.select("body").append("svg")
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-    // .call(zoom);
 
 var controlsFilm = d3.select("body").append("label")
     .attr("id", "controlsFilm");
@@ -313,14 +346,6 @@ var checkboxTech = controlsTech.append("input")
 controlsTech.append("span")
         .text("Technology");
 
-// var controlsTech = d3.select("body").append("label")
-//         .attr("id", "buttonTest");
-//
-// var checkboxTech = controlsTech.append("input")
-//         .attr("type", "button");
-// controlsTech.append("span")
-//         .text("Back to initial scale");
-
 var div1 = d3.select("body").append("div")
               .attr("class", "mapTooltip1")
               .style("opacity", 0);
@@ -331,6 +356,7 @@ var div2 = d3.select("body").append("div")
 
 var xVar = "YEAR",
     node;
+    //list = [];
 
 d3.csv("CultureFresco2_2.csv", function(error, data) {
 
@@ -487,7 +513,7 @@ d3.csv("CultureFresco2_2.csv", function(error, data) {
 
           svg.select(".x1_axis") // change the x axis
             .transition().duration(200).ease("sin-in-out")
-            .call(x1Axis)
+            .call(x1Axis);
 
           svg.select(".x1_axis")
             .selectAll("text")
@@ -496,9 +522,9 @@ d3.csv("CultureFresco2_2.csv", function(error, data) {
 
           svg.select(".x2_axis")
             .transition().duration(200).ease("sin-in-out")
-            .call(x2Axis)
+            .call(x2Axis);
 
-            svg.select(".x2_axis")
+          svg.select(".x2_axis")
             .selectAll("text")
             .attr("x", -20)
             .attr("class","x2TickLabels")
@@ -510,7 +536,7 @@ d3.csv("CultureFresco2_2.csv", function(error, data) {
 
     function clickAxis (axisLabel) {
 
-      redrawAxis(axisLabel)
+      redrawAxis(axisLabel);
 
       svg.selectAll(".x2TickLabels")
       .on("click", function(axisLabel) {
@@ -538,28 +564,28 @@ d3.csv("CultureFresco2_2.csv", function(error, data) {
       list = list.concat(filmData);
     }
     if (music) {
-      list = list.concat(musicData)
+      list = list.concat(musicData);
     }
     if (tvEntertainmentMedia) {
-      list = list.concat(tvEntertainmentMediaData)
+      list = list.concat(tvEntertainmentMediaData);
     }
     if (advertising) {
-      list = list.concat(advertisingData)
+      list = list.concat(advertisingData);
     }
     if (artLiterature) {
-      list = list.concat(artLiteratureData)
+      list = list.concat(artLiteratureData);
     }
     if (fashionRetail) {
-      list = list.concat(fashionRetailData)
+      list = list.concat(fashionRetailData);
     }
     if (politicsSocialMovements) {
-      list = list.concat(politicsSocialMovementsData)
+      list = list.concat(politicsSocialMovementsData);
     }
     if (tech) {
-      list = list.concat(techData)
+      list = list.concat(techData);
     }
     if (icons) {
-      list = list.concat(iconsData)
+      list = list.concat(iconsData);
     }
 
     draw(list);
@@ -605,28 +631,32 @@ function draw(nodes) {
           var newNode = node.enter().append("g")
                   .attr("class", "node")
                   .style("cursor", "pointer")
-                  .on("mouseover", function(d) {
+                  .call(force.drag);
+
+              newNode.on("mouseover", function(d) {
                       div2.transition().duration(300).style("opacity", 1);
                       div2.text(d.TITLE + " (" + d.YEAR + ")")
                       .style("left", (d3.event.pageX) + "px")
                       .style("top", (d3.event.pageY-10) + "px");
-                    })
-                  .on("click", function(d) {
-                       div1.transition().duration(300).style("opacity", 1);
-                       div1.html("<img src=" + d.IMAGE + " width=250 > <br><p style = padding-left:5px;font-weight:bold>"  + d.TITLE + " (" + d.YEAR + ")</p><p style = padding-left:5px;font-size:10>" + d.DESCRIPTION + "</p><p style=padding-left:5px;text-decoration:underline;font-size:10;>Source</p>")
-                       .style("left", (d3.event.pageX) + "px")
-                       .style("top", (d3.event.pageY-10) + "px");
-                    })
-                  .on("mouseout", function (d) { div1.transition().delay(1500).duration(300).style("opacity", 0);
-                                                 div2.transition().duration(300).style("opacity", 0);})
-                  .call(force.drag);
+                      })
+                    .on("click", function(d) {
+                         div1.transition().duration(300).style("opacity", 1);
+                         div1.html("<img src=" + d.IMAGE + " width=250 > <br><p style = padding-left:5px;font-weight:bold>"  + d.TITLE + " (" + d.YEAR + ")</p><p style = padding-left:5px;font-size:10>" + d.DESCRIPTION + "</p><p style=padding-left:5px;text-decoration:underline;font-size:10;>Source</p>")
+                         .style("left", (d3.event.pageX) + "px")
+                         .style("top", (d3.event.pageY-10) + "px");
+                         //console.log(list.length);
+                      })
+                    .on("mouseout", function (d) {
+                      div1.transition().delay(1500).duration(300).style("opacity", 0);
+                      div2.transition().duration(300).style("opacity", 0);
+                    });
 
-          newNode.append("image")
-              .attr("xlink:href", function(d) { return d.IMAGE; })
-              .attr("x", -8)
-              .attr("y", -8)
-              .attr("width", 30)
-              .attr("height", 30);
+              newNode.append("image")
+                  .attr("xlink:href", function(d) { return d.IMAGE; })
+                  .attr("x", -8)
+                  .attr("y", -8)
+                  .attr("width", 30)
+                  .attr("height", 30);
 
         node.exit().remove();
 
