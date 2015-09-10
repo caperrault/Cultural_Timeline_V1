@@ -47,7 +47,7 @@ p {
     float:right;
     color:white;
     font-size:10px;
-    padding-right: 85px;
+    padding-right: 192px;
     padding-top: 70px;
     cursor: pointer;
 }
@@ -64,7 +64,7 @@ p {
   font-size: 14px;
   position: absolute;
   top: 625px;
-  left: 90px;
+  left: 95px;
   color: white;
   font: 10px sans-serif;
 }
@@ -73,7 +73,7 @@ p {
   font-size: 14px;
   position: absolute;
   top: 650px;
-  left: 90px;
+  left: 95px;
   color: white;
   font: 10px sans-serif;
 }
@@ -82,7 +82,7 @@ p {
   font-size: 14px;
   position: absolute;
   top: 675px;
-  left: 90px;
+  left: 95px;
   color: white;
   font: 10px sans-serif;
 }
@@ -91,7 +91,7 @@ p {
   font-size: 14px;
   position: absolute;
   top: 625px;
-  left: 250px;
+  left: 252px;
   color: white;
   font: 10px sans-serif;
 }
@@ -100,7 +100,7 @@ p {
   font-size: 14px;
   position: absolute;
   top: 650px;
-  left: 250px;
+  left: 252px;
   color: white;
   font: 10px sans-serif;
 }
@@ -109,7 +109,7 @@ p {
   font-size: 14px;
   position: absolute;
   top: 675px;
-  left: 250px;
+  left: 252px;
   color: white;
   font: 10px sans-serif;
 }
@@ -118,7 +118,7 @@ p {
   font-size: 14px;
   position: absolute;
   top: 625px;
-  left: 410px;
+  left: 412px;
   color: white;
   font: 10px sans-serif;
 }
@@ -127,7 +127,7 @@ p {
   font-size: 14px;
   position: absolute;
   top: 650px;
-  left: 410px;
+  left: 412px;
   color: white;
   font: 10px sans-serif;
 }
@@ -136,7 +136,7 @@ p {
   font-size: 14px;
   position: absolute;
   top: 675px;
-  left: 410px;
+  left: 412px;
   color: white;
   font: 10px sans-serif;
 }
@@ -383,10 +383,10 @@ d3.csv("CultureFresco2_2.csv", function(error, data) {
 
              d3.select("#backButton").attr("class", "notDisplayed");
 
-                        x1.range([0, width])
+                        x1.range([-15, width])
                         .domain([1980,2019]);
 
-                       x2.rangePoints([0, width-130])
+                       x2.rangePoints([-15, width-135])
                         .domain(["'A material world'","'The rise of Gen X'","'The World Wide Web'","'Looking into the Matrix'","'Age of dark truth'","'Age of togetherness'","'Going to other worlds'","'To be devised'"]);
 
                        x1Axis.ticks(10);
@@ -436,8 +436,8 @@ d3.csv("CultureFresco2_2.csv", function(error, data) {
 
         var domainX1 , domainX2;
 
-        x1.range([0, width-20]);
-        x2.rangePoints([0, width-45]);
+        x1.range([-15, width-125]);
+        x2.rangePoints([-15, width-150]);
 
         x1Axis.ticks(5);
         x2Axis.ticks(3);
