@@ -336,6 +336,8 @@ var xVar = "YEAR",
 
 d3.csv("CultureFresco2_2.csv", function(error, data) {
 
+  var clickedAxisLabel;
+
   var x1Axis = d3.svg.axis()
       .scale(x1)
       .ticks(10)
@@ -371,7 +373,7 @@ d3.csv("CultureFresco2_2.csv", function(error, data) {
          .style("text-anchor", "start")
 
          svg.selectAll(".x2TickLabels")
-         .on("click", function(d) { clickAxis(d); });
+         .on("click", function(d) { clickAxis(d); clickedAxisLabel = d; console.log("clickedAxisLabel", clickedAxisLabel)});
 
          d3.select("#backButton")
            .on("click", function(d) {
@@ -411,7 +413,7 @@ d3.csv("CultureFresco2_2.csv", function(error, data) {
                           .style("text-anchor", "start");
 
                        svg.selectAll(".x2TickLabels")
-                      .on("click", function(d) { clickAxis(d); });
+                      .on("click", function(d) { clickAxis(d);});
 
                       update();
 
@@ -432,6 +434,12 @@ d3.csv("CultureFresco2_2.csv", function(error, data) {
 
 
     function setDomain (axisLabel) {
+
+      x1.range([0, width-20]);
+      x2.rangePoints([0, width-45]);
+
+      x1Axis.ticks(5);
+      x2Axis.ticks(3);
 
       if (axisLabel === "'A material world'") {
               domainX1 = [1980,1985.1];
@@ -478,7 +486,7 @@ d3.csv("CultureFresco2_2.csv", function(error, data) {
 
     }
 
-    function clickAxis (axisLabel) {
+    function redrawAxis (axisLabel) {
 
       // svg.append("g")
       //    .attr("class", "x2_axis")
@@ -491,26 +499,20 @@ d3.csv("CultureFresco2_2.csv", function(error, data) {
       //   .style("text-anchor", "start")
       //   .on("click", function(d) { clickAxis(d); });
 
-      x1.range([0, width-20]);
-      x2.rangePoints([0, width-45]);
-
-      x1Axis.ticks(5);
-      x2Axis.ticks(3);
-
       setDomain(axisLabel);
 
       x1.domain(domainX1);
       x2.domain(domainX2);
 
           svg.select(".x1_axis") // change the x axis
-            .transition().duration(1500).ease("sin-in-out")
+        //    .transition().duration(1500).ease("sin-in-out")
             .call(x1Axis)
             .selectAll("text")
             .attr("x", -20)
             .style("text-anchor", "start"); // change the x axis;
 
           svg.select(".x2_axis")
-            .transition().duration(1500).ease("sin-in-out")
+          //  .transition().duration(1500).ease("sin-in-out")
             .call(x2Axis)
             .selectAll("text")
             .attr("x", -20)
@@ -519,6 +521,24 @@ d3.csv("CultureFresco2_2.csv", function(error, data) {
             .style("text-anchor", "start");
 
             update();
+    };
+
+    function clickAxis (axisLabel) {
+
+      redrawAxis(axisLabel)
+
+      // svg.select(".x2_axis")
+      // //  .transition().duration(1500).ease("sin-in-out")
+      //   .call(x2Axis)
+      //   .selectAll("text")
+      //   .attr("x", -20)
+      //   .attr("class","x2TickLabels")
+      //   .style("cursor", "pointer")
+      //   .style("text-anchor", "start");
+
+            svg.selectAll(".x2TickLabels")
+            .on("click", function(axisLabel) { clickedAxisLabel = axisLabel; console.log("new clickedAxisLabel", clickedAxisLabel); clickAxis(clickedAxisLabel);});
+
     };
 
   function update() {
