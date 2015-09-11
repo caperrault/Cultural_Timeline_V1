@@ -194,6 +194,21 @@ div.mapTooltip2 {
   cursor: default;
 }
 
+#viewAllThemes {
+  position: absolute;
+  top: 645px;
+  left: 909px;
+  color: white;
+  font: 10px sans-serif;
+  cursor: default;
+  font-style: italic;
+  cursor: pointer;
+}
+
+#viewAllThemes:hover {
+  color: red;
+}
+
 .themes {
   font-size: 14px;
   position: absolute;
@@ -235,6 +250,8 @@ div.mapTooltip2 {
 <p id="backButton" class="notDisplayed"> Back to initial scale </p>
 
 <p id="themesTitle" > Themes: </p>
+
+<p id="viewAllThemes" > View all themes </p>
 
 <p id="theme1" class="themes"> Theme 1 </p>
 
@@ -358,6 +375,8 @@ var xVar = "YEAR",
     node,
     selectedTheme = "all";
     //list = [];
+
+d3.select("#viewAllThemes").attr("class", "notDisplayed");
 
 d3.csv("CultureFresco2_2.csv", function(error, data) {
 
@@ -621,9 +640,10 @@ function draw(nodes) {
 
           d3.select("#theme1")
             .on("click", function () {
+                              d3.select("#viewAllThemes").attr("class", "displayed");
                               selectedTheme = "theme1";
                               console.log("selectedTheme:", selectedTheme);
-                              node.attr("opacity", function(d) {
+                              node.transition().duration(450).attr("opacity", function(d) {
                                 if (d.THEME === "theme1") { return 1;}
                                 else { return 0.08; }
                               });
@@ -631,9 +651,10 @@ function draw(nodes) {
 
           d3.select("#theme2")
             .on("click", function () {
+                            d3.select("#viewAllThemes").attr("class", "displayed");
                             selectedTheme = "theme2";
                             console.log("selectedTheme:", selectedTheme);
-                            node.attr("opacity", function(d) {
+                            node.transition().duration(450).attr("opacity", function(d) {
                               if (d.THEME === "theme2") { return 1;}
                               else { return 0.08; }
               });
@@ -641,12 +662,21 @@ function draw(nodes) {
 
           d3.select("#theme3")
             .on("click", function () {
+                            d3.select("#viewAllThemes").attr("class", "displayed");
                             selectedTheme = "theme3";
                             console.log("selectedTheme:", selectedTheme);
-                            node.attr("opacity", function(d) {
+                            node.transition().duration(450).attr("opacity", function(d) {
                               if (d.THEME === "theme3") { return 1;}
                               else { return 0.08; }
                           });
+                        });
+
+          d3.select("#viewAllThemes")
+            .on("click", function () {
+                            d3.select("#viewAllThemes").attr("class", "notDisplayed");
+                            selectedTheme = "all";
+                            console.log("selectedTheme:", selectedTheme);
+                            node.transition().duration(450).attr("opacity", 1);
                         });
 
           // Set initial positions
