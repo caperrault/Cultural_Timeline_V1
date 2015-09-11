@@ -58,8 +58,13 @@ p {
   color: red;
 }
 
-.node:hover {
+.node {
+  cursor: default;
+}
+
+.nodeVisible:hover {
   opacity: 0.5;
+  cursor: pointer;
 }
 
 #controlsFilm {
@@ -214,7 +219,8 @@ div.mapTooltip2 {
   position: absolute;
   color: white;
   font: 10px sans-serif;
-  left: 1073px;
+  left: 1010px;
+  cursor: pointer;
 }
 
 #theme1 {
@@ -229,14 +235,9 @@ div.mapTooltip2 {
   top: 670px;
 }
 
-.themes {
-  cursor: pointer;
-}
-
 .themes:hover {
   color: red;
 }
-
 
 </style>
 
@@ -249,9 +250,9 @@ div.mapTooltip2 {
 
 <p id="backButton" class="notDisplayed"> Back to initial scale </p>
 
-<p id="themesTitle" > Themes: </p>
+<p id="themesTitle" > Themes over time: </p>
 
-<p id="viewAllThemes" > View all themes </p>
+<p id="viewAllThemes" > (View all themes) </p>
 
 <p id="theme1" class="themes"> Theme 1 </p>
 
@@ -638,57 +639,6 @@ function draw(nodes) {
 
         function tick(e) {
 
-          d3.select("#theme1")
-            .on("click", function () {
-                              d3.select("#viewAllThemes").attr("class", "displayed");
-                              d3.select("#theme1").style("color", "red");
-                              d3.select("#theme2").style("color", "white");
-                              d3.select("#theme3").style("color", "white");
-                              selectedTheme = "theme1";
-                              console.log("selectedTheme:", selectedTheme);
-                              node.transition().duration(450).attr("opacity", function(d) {
-                                if (d.THEME === "theme1") { return 1;}
-                                else { return 0.08; }
-                              });
-                            });
-
-          d3.select("#theme2")
-            .on("click", function () {
-                            d3.select("#viewAllThemes").attr("class", "displayed");
-                            d3.select("#theme2").style("color", "red");
-                            d3.select("#theme1").style("color", "white");
-                            d3.select("#theme3").style("color", "white");
-                            selectedTheme = "theme2";
-                            console.log("selectedTheme:", selectedTheme);
-                            node.transition().duration(450).attr("opacity", function(d) {
-                              if (d.THEME === "theme2") { return 1;}
-                              else { return 0.08; }
-              });
-            });
-
-          d3.select("#theme3")
-            .on("click", function () {
-                            d3.select("#viewAllThemes").attr("class", "displayed");
-                            d3.select("#theme3").style("color", "red");
-                            d3.select("#theme1").style("color", "white");
-                            d3.select("#theme2").style("color", "white");
-                            selectedTheme = "theme3";
-                            console.log("selectedTheme:", selectedTheme);
-                            node.transition().duration(450).attr("opacity", function(d) {
-                              if (d.THEME === "theme3") { return 1;}
-                              else { return 0.08; }
-                          });
-                        });
-
-          d3.select("#viewAllThemes")
-            .on("click", function () {
-                            d3.select("#viewAllThemes").attr("class", "notDisplayed");
-                            d3.selectAll(".themes").style("color", "white");
-                            selectedTheme = "all";
-                            console.log("selectedTheme:", selectedTheme);
-                            node.transition().duration(450).attr("opacity", 1);
-                        });
-
           // Set initial positions
         nodes.forEach(function(d) {
             // d.x = x(d[xVar]);
@@ -700,27 +650,52 @@ function draw(nodes) {
                         .data(nodes, function(d) {return d.IMAGE;});
 
           var newNode = node.enter().append("g")
-                  .attr("class", "node")
-                  .style("cursor", "pointer")
+                  .classed("nodeVisible", true)
+                  .classed("node", true)
                   .call(force.drag);
 
-              newNode.on("mouseover", function(d) {
-                      div2.transition().duration(300).style("opacity", 1);
-                      div2.text(d.TITLE + " (" + d.YEAR + ")")
-                      .style("left", (d3.event.pageX) + "px")
-                      .style("top", (d3.event.pageY-10) + "px");
-                      })
-                    .on("click", function(d) {
-                         div1.transition().duration(300).style("opacity", 1);
-                         div1.html("<img src=" + d.IMAGE + " width=250 > <br><p style = padding-left:5px;font-weight:bold>"  + d.TITLE + " (" + d.YEAR + ")</p><p style = padding-left:5px;font-size:10>" + d.DESCRIPTION + "</p><p style=padding-left:5px;text-decoration:underline;font-size:10;>Source</p>")
-                         .style("left", (d3.event.pageX) + "px")
-                         .style("top", (d3.event.pageY-10) + "px");
-                         //console.log(list.length);
-                      })
-                    .on("mouseout", function (d) {
-                      div1.transition().delay(1500).duration(300).style("opacity", 0);
-                      div2.transition().duration(300).style("opacity", 0);
-                    });
+              newNode
+              // .classed("nodeVisible", function (d) {
+              //           if (d.THEME === selectedTheme) {return true;}
+              //           else if (selectedTheme === "all") {return true;}
+              //           else {return false;}
+              //         })
+                      .on("mouseover", function(d) {
+                      if (d.THEME === selectedTheme) {
+                        div2.transition().duration(300).style("opacity", 1);
+                        div2.text(d.TITLE + " (" + d.YEAR + ")")
+                        .style("left", (d3.event.pageX) + "px")
+                        .style("top", (d3.event.pageY-10) + "px");}
+
+                      else if (selectedTheme === "all") {
+                        div2.transition().duration(300).style("opacity", 1);
+                        div2.text(d.TITLE + " (" + d.YEAR + ")")
+                        .style("left", (d3.event.pageX) + "px")
+                        .style("top", (d3.event.pageY-10) + "px");
+                      }
+                        })
+                      .on("click", function(d) {
+                        if (d.THEME === selectedTheme) {
+                           div1.transition().duration(300).style("opacity", 1);
+                           div1.html("<img src=" + d.IMAGE + " width=250 > <br><p style = padding-left:5px;font-weight:bold>"  + d.TITLE + " (" + d.YEAR + ")</p><p style = padding-left:5px;font-size:10>" + d.DESCRIPTION + "</p><p style=padding-left:5px;text-decoration:underline;font-size:10;>Source</p>")
+                           .style("left", (d3.event.pageX) + "px")
+                           .style("top", (d3.event.pageY-10) + "px");
+                           //console.log(list.length);
+                         }
+
+                         else if (selectedTheme === "all") {
+                           div1.transition().duration(300).style("opacity", 1);
+                           div1.html("<img src=" + d.IMAGE + " width=250 > <br><p style = padding-left:5px;font-weight:bold>"  + d.TITLE + " (" + d.YEAR + ")</p><p style = padding-left:5px;font-size:10>" + d.DESCRIPTION + "</p><p style=padding-left:5px;text-decoration:underline;font-size:10;>Source</p>")
+                           .style("left", (d3.event.pageX) + "px")
+                           .style("top", (d3.event.pageY-10) + "px");
+                           //console.log(list.length);
+                         }
+                        })
+                      .on("mouseout", function (d) {
+                        div1.transition().delay(1500).duration(300).style("opacity", 0);
+                        div2.transition().duration(300).style("opacity", 0);
+                      });
+                    //  .attr("class", "nodeVisible");
 
               newNode.append("image")
                   .attr("xlink:href", function(d) { return d.IMAGE; })
@@ -734,6 +709,71 @@ function draw(nodes) {
           node.each(moveTowardDataPosition(e.alpha));
           node.each(collide(e.alpha));
           node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+
+          d3.select("#theme1")
+            .on("click", function () {
+                              d3.select("#viewAllThemes").attr("class", "displayed");
+                              d3.select("#theme1").style("color", "red");
+                              d3.select("#theme2").style("color", "white");
+                              d3.select("#theme3").style("color", "white");
+                              selectedTheme = "theme1";
+                              console.log("selectedTheme:", selectedTheme);
+                              node.transition().duration(450).attr("opacity", function(d) {
+                                if (d.THEME === "theme1") { return 1; }
+                                else { return 0.05; }
+                              });
+                              node.classed("nodeVisible", function(d) {
+                                if (d.THEME === "theme1") { return true; }
+                                else { return false; }
+                              });
+                  //              .attr("class", function);
+                            });
+
+          d3.select("#theme2")
+            .on("click", function () {
+                            d3.select("#viewAllThemes").attr("class", "displayed");
+                            d3.select("#theme2").style("color", "red");
+                            d3.select("#theme1").style("color", "white");
+                            d3.select("#theme3").style("color", "white");
+                            selectedTheme = "theme2";
+                            console.log("selectedTheme:", selectedTheme);
+                            node.transition().duration(450).attr("opacity", function(d) {
+                              if (d.THEME === "theme2") { return 1;}
+                              else { return 0.05; }
+                            });
+                            node.classed("nodeVisible", function(d) {
+                              if (d.THEME === "theme2") { return true; }
+                              else { return false; }
+                            });
+            });
+
+          d3.select("#theme3")
+            .on("click", function () {
+                            d3.select("#viewAllThemes").attr("class", "displayed");
+                            d3.select("#theme3").style("color", "red");
+                            d3.select("#theme1").style("color", "white");
+                            d3.select("#theme2").style("color", "white");
+                            selectedTheme = "theme3";
+                            console.log("selectedTheme:", selectedTheme);
+                            node.transition().duration(450).attr("opacity", function(d) {
+                              if (d.THEME === "theme3") { return 1;}
+                              else { return 0.05; }
+                           });
+                           node.classed("nodeVisible", function(d) {
+                             if (d.THEME === "theme3") { return true; }
+                             else { return false; }
+                           });
+                        });
+
+          d3.select("#viewAllThemes")
+            .on("click", function () {
+                            d3.select("#viewAllThemes").attr("class", "notDisplayed");
+                            d3.selectAll(".themes").style("color", "white");
+                            selectedTheme = "all";
+                            console.log("selectedTheme:", selectedTheme);
+                            node.transition().duration(450).attr("opacity", 1);
+                            node.classed("nodeVisible", true );
+                        });
         }
 
         function moveTowardDataPosition(alpha) {
