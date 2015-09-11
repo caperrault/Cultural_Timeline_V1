@@ -215,7 +215,6 @@ div.mapTooltip2 {
 }
 
 .themes {
-  font-size: 14px;
   position: absolute;
   color: white;
   font: 10px sans-serif;
@@ -239,6 +238,45 @@ div.mapTooltip2 {
   color: red;
 }
 
+.arrow {
+  position: absolute;
+  font: 8px sans-serif;
+  left: 1060px;
+  color: red;
+}
+
+#theme1Arrow {
+  top: 623px;
+}
+
+#theme2Arrow {
+  top: 648px;
+}
+
+#theme3Arrow {
+  top: 673px;
+}
+
+.themeDescription {
+  position: absolute;
+  color: white;
+  font: 10px sans-serif;
+  left: 1080px;
+  right: 210px;
+}
+
+#theme1Description {
+  top: 620px;
+}
+
+#theme2Description {
+  top: 645px;
+}
+
+#theme3Description {
+  top: 670px;
+}
+
 </style>
 
 <body>
@@ -259,6 +297,18 @@ div.mapTooltip2 {
 <p id="theme2" class="themes"> Theme 2 </p>
 
 <p id="theme3" class="themes"> Theme 3 </p>
+
+<p id="theme1Arrow" class="arrow"> &#9654; </p>
+
+<p id="theme2Arrow" class="arrow"> &#9654; </p>
+
+<p id="theme3Arrow" class="arrow"> &#9654; </p>
+
+<p id="theme1Description" class="themeDescription"> Proin purus metus, malesuada at ex vitae, scelerisque luctus erat. Nulla condimentum arcu eget est laoreet, et semper urna sagittis. Sed vel mattis ex. Proin dictum, ante ac porta faucibus, ipsum ligula interdum massa, eget imperdiet diam nisl a dolor. </p>
+
+<p id="theme2Description" class="themeDescription"> Mauris ullamcorper, nulla vel maximus congue, ex elit eleifend nisl, nec ornare nulla diam vitae lectus. Quisque at ante quis mauris tempus rhoncus. Nam imperdiet orci massa, ut commodo lorem faucibus eu. Sed pellentesque felis et justo sagittis fermentum. Cras a nibh libero. </p>
+
+<p id="theme3Description" class="themeDescription"> Vestibulum tincidunt, nisl et malesuada gravida, neque massa placerat risus, quis volutpat nulla risus non risus. Maecenas dapibus, velit eu viverra tincidunt, nisi eros aliquet turpis, eleifend porta arcu arcu a turpis. </p>
 
 <script>
 
@@ -378,6 +428,8 @@ var xVar = "YEAR",
     //list = [];
 
 d3.select("#viewAllThemes").attr("class", "notDisplayed");
+d3.selectAll(".arrow").classed("notDisplayed", true);
+d3.selectAll(".themeDescription").classed("notDisplayed", true);
 
 d3.csv("CultureFresco2_2.csv", function(error, data) {
 
@@ -713,6 +765,10 @@ function draw(nodes) {
           d3.select("#theme1")
             .on("click", function () {
                               d3.select("#viewAllThemes").attr("class", "displayed");
+                              d3.selectAll(".arrow").classed("notDisplayed", true);
+                              d3.select("#theme1Arrow").classed("notDisplayed", false);
+                              d3.selectAll(".themeDescription").classed("notDisplayed", true);
+                              d3.select("#theme1Description").classed("notDisplayed", false);
                               d3.select("#theme1").style("color", "red");
                               d3.select("#theme2").style("color", "white");
                               d3.select("#theme3").style("color", "white");
@@ -732,6 +788,10 @@ function draw(nodes) {
           d3.select("#theme2")
             .on("click", function () {
                             d3.select("#viewAllThemes").attr("class", "displayed");
+                            d3.selectAll(".arrow").classed("notDisplayed", true);
+                            d3.select("#theme2Arrow").classed("notDisplayed", false);
+                            d3.selectAll(".themeDescription").classed("notDisplayed", true);
+                            d3.select("#theme2Description").classed("notDisplayed", false);
                             d3.select("#theme2").style("color", "red");
                             d3.select("#theme1").style("color", "white");
                             d3.select("#theme3").style("color", "white");
@@ -750,6 +810,10 @@ function draw(nodes) {
           d3.select("#theme3")
             .on("click", function () {
                             d3.select("#viewAllThemes").attr("class", "displayed");
+                            d3.selectAll(".arrow").classed("notDisplayed", true);
+                            d3.select("#theme3Arrow").classed("notDisplayed", false);
+                            d3.selectAll(".themeDescription").classed("notDisplayed", true);
+                            d3.select("#theme3Description").classed("notDisplayed", false);
                             d3.select("#theme3").style("color", "red");
                             d3.select("#theme1").style("color", "white");
                             d3.select("#theme2").style("color", "white");
@@ -768,6 +832,8 @@ function draw(nodes) {
           d3.select("#viewAllThemes")
             .on("click", function () {
                             d3.select("#viewAllThemes").attr("class", "notDisplayed");
+                            d3.selectAll(".arrow").classed("notDisplayed", true);
+                            d3.selectAll(".themeDescription").classed("notDisplayed", true);
                             d3.selectAll(".themes").style("color", "white");
                             selectedTheme = "all";
                             console.log("selectedTheme:", selectedTheme);
