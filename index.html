@@ -641,6 +641,9 @@ function draw(nodes) {
           d3.select("#theme1")
             .on("click", function () {
                               d3.select("#viewAllThemes").attr("class", "displayed");
+                              d3.select("#theme1").style("color", "red");
+                              d3.select("#theme2").style("color", "white");
+                              d3.select("#theme3").style("color", "white");
                               selectedTheme = "theme1";
                               console.log("selectedTheme:", selectedTheme);
                               node.transition().duration(450).attr("opacity", function(d) {
@@ -652,6 +655,9 @@ function draw(nodes) {
           d3.select("#theme2")
             .on("click", function () {
                             d3.select("#viewAllThemes").attr("class", "displayed");
+                            d3.select("#theme2").style("color", "red");
+                            d3.select("#theme1").style("color", "white");
+                            d3.select("#theme3").style("color", "white");
                             selectedTheme = "theme2";
                             console.log("selectedTheme:", selectedTheme);
                             node.transition().duration(450).attr("opacity", function(d) {
@@ -663,6 +669,9 @@ function draw(nodes) {
           d3.select("#theme3")
             .on("click", function () {
                             d3.select("#viewAllThemes").attr("class", "displayed");
+                            d3.select("#theme3").style("color", "red");
+                            d3.select("#theme1").style("color", "white");
+                            d3.select("#theme2").style("color", "white");
                             selectedTheme = "theme3";
                             console.log("selectedTheme:", selectedTheme);
                             node.transition().duration(450).attr("opacity", function(d) {
@@ -674,6 +683,7 @@ function draw(nodes) {
           d3.select("#viewAllThemes")
             .on("click", function () {
                             d3.select("#viewAllThemes").attr("class", "notDisplayed");
+                            d3.selectAll(".themes").style("color", "white");
                             selectedTheme = "all";
                             console.log("selectedTheme:", selectedTheme);
                             node.transition().duration(450).attr("opacity", 1);
