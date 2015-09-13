@@ -67,76 +67,56 @@ p {
   cursor: pointer;
 }
 
-#controlsFilm {
+.controls {
   position: absolute;
-  top: 625px;
-  left: 85px;
   color: white;
   font: 10px sans-serif;
   cursor: pointer;
+}
+
+#controlsFilm {
+  top: 625px;
+  left: 85px;
+}
+
+#controlsOnlyFilm {
+  top: 700px;
+  left: 85px;
 }
 
 #controlsMusic {
-  position: absolute;
   top: 650px;
   left: 85px;
-  color: white;
-  font: 10px sans-serif;
-  cursor: pointer;
 }
 
 #controlsArtLiterature {
-  position: absolute;
   top: 675px;
   left: 85px;
-  color: white;
-  font: 10px sans-serif;
-  cursor: pointer;
 }
 
 #controlsTvEntertainmentMedia {
-  position: absolute;
   top: 625px;
   left: 250px;
-  color: white;
-  font: 10px sans-serif;
-  cursor: pointer;
 }
 
 #controlsAdvertising {
-  position: absolute;
   top: 650px;
   left: 250px;
-  color: white;
-  font: 10px sans-serif;
-  cursor: pointer;
 }
 
 #controlsFashionRetail {
-  position: absolute;
   top: 675px;
   left: 250px;
-  color: white;
-  font: 10px sans-serif;
-  cursor: pointer;
 }
 
 #controlsPoliticsSocialMovements {
-  position: absolute;
   top: 625px;
   left: 413px;
-  color: white;
-  font: 10px sans-serif;
-  cursor: pointer;
 }
 
 #controlsTech {
-  position: absolute;
   top: 650px;
   left: 413px;
-  color: white;
-  font: 10px sans-serif;
-  cursor: pointer;
 }
 
 #controlsIcons {
@@ -277,6 +257,27 @@ div.mapTooltip2 {
   top: 670px;
 }
 
+/*.only {
+  position: absolute;
+  color: white;
+  font: 10px sans-serif;
+  cursor: pointer;
+}
+
+#onlyFilm {
+  top: 700px;
+  left: 85px;
+}*/
+
+#selectAllCategories {
+  position: absolute;
+  color: white;
+  font: 10px sans-serif;
+  cursor: pointer;
+  top: 725px;
+  left: 85px;
+}
+
 </style>
 
 <body>
@@ -310,6 +311,10 @@ div.mapTooltip2 {
 
 <p id="theme3Description" class="themeDescription"> Vestibulum tincidunt, nisl et malesuada gravida, neque massa placerat risus, quis volutpat nulla risus non risus. Maecenas dapibus, velit eu viverra tincidunt, nisi eros aliquet turpis, eleifend porta arcu arcu a turpis. </p>
 
+<!-- <p id="onlyFilm" class="only"> only </p> -->
+
+<p id="selectAllCategories"> Select all </p>
+
 <script>
 
 var margin = {top: 0, right: 20, bottom: 30, left: 100},
@@ -334,82 +339,111 @@ var svg = d3.select("body").append("svg")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 var controlsFilm = d3.select("body").append("label")
+    .attr("class", "controls")
     .attr("id", "controlsFilm");
 
 var checkboxFilm = controlsFilm.append("input")
     .attr("type", "checkbox")
+    .attr("id", "inputFilm")
     .property("checked", true);
 controlsFilm.append("span")
     .text("Film");
 
+  var controlsOnlyFilm = d3.select("body").append("label")
+      .attr("class", "controls")
+      .attr("id", "controlsOnlyFilm");
+
+  var checkboxOnlyFilm = controlsOnlyFilm.append("input")
+      .attr("type", "checkbox")
+      .attr("opacity", 0)
+      .property("checked", false);
+  controlsOnlyFilm.append("span")
+      .text("only");
+
 var controlsMusic = d3.select("body").append("label")
+        .attr("class", "controls")
         .attr("id", "controlsMusic");
 
 var checkboxMusic = controlsMusic.append("input")
         .attr("type", "checkbox")
+        .attr("id", "inputMusic")
         .property("checked", true);
 controlsMusic.append("span")
         .text("Music");
 
 var controlsTvEntertainmentMedia = d3.select("body").append("label")
+        .attr("class", "controls")
         .attr("id", "controlsTvEntertainmentMedia");
 
 var checkboxTvEntertainmentMedia = controlsTvEntertainmentMedia.append("input")
         .attr("type", "checkbox")
+        .attr("id", "inputTvEntertainmentMedia")
         .property("checked", true);
 controlsTvEntertainmentMedia.append("span")
-        .text("Tv / Entertainment / Media");
+        .text("Tv / Ent. / Media");
 
 var controlsAdvertising = d3.select("body").append("label")
+        .attr("class", "controls")
         .attr("id", "controlsAdvertising");
 
 var checkboxAdvertising = controlsAdvertising.append("input")
         .attr("type", "checkbox")
+        .attr("id", "inputAdvertising")
         .property("checked", true);
 controlsAdvertising.append("span")
         .text("Advertising");
 
 var controlsArtLiterature = d3.select("body").append("label")
+        .attr("class", "controls")
         .attr("id", "controlsArtLiterature");
 
 var checkboxArtLiterature = controlsArtLiterature.append("input")
         .attr("type", "checkbox")
+        .attr("id", "inputArtLiterature")
         .property("checked", true);
 controlsArtLiterature.append("span")
         .text("Art / Literature");
 
 var controlsFashionRetail = d3.select("body").append("label")
+        .attr("class", "controls")
         .attr("id", "controlsFashionRetail");
 
 var checkboxFashionRetail = controlsFashionRetail.append("input")
         .attr("type", "checkbox")
+        .attr("id", "inputFashionRetail")
         .property("checked", true);
 controlsFashionRetail.append("span")
         .text("Fashion / Retail");
 
 var controlsIcons = d3.select("body").append("label")
+        .attr("class", "controls")
         .attr("id", "controlsIcons");
 
 var checkboxIcons = controlsIcons.append("input")
         .attr("type", "checkbox")
+        .attr("id", "inputIcons")
         .property("checked", true);
 controlsIcons.append("span")
         .text("Icons");
 
 var controlsPoliticsSocialMovements = d3.select("body").append("label")
+        .attr("class", "controls")
         .attr("id", "controlsPoliticsSocialMovements");
 
 var checkboxPoliticsSocialMovements = controlsPoliticsSocialMovements.append("input")
         .attr("type", "checkbox")
+        .attr("id", "inputPoliticsSocialMovements")
         .property("checked", true);
 controlsPoliticsSocialMovements.append("span")
         .text("Politics / Social Movements");
 
 var controlsTech = d3.select("body").append("label")
+        .attr("class", "controls")
         .attr("id", "controlsTech");
 
 var checkboxTech = controlsTech.append("input")
         .attr("type", "checkbox")
+        .attr("id", "inputTech")
         .property("checked", true);
 controlsTech.append("span")
         .text("Technology");
@@ -623,6 +657,7 @@ d3.csv("CultureFresco2_2.csv", function(error, data) {
   function update() {
 
     var film = checkboxFilm.node().checked
+      , onlyFilm = checkboxOnlyFilm.node().checked
       , music = checkboxMusic.node().checked
       , artLiterature = checkboxArtLiterature.node().checked
       , tvEntertainmentMedia = checkboxTvEntertainmentMedia.node().checked
@@ -635,6 +670,9 @@ d3.csv("CultureFresco2_2.csv", function(error, data) {
 
     if (film) {
       list = list.concat(filmData);
+    }
+    if (onlyFilm) {
+    list = filmData;
     }
     if (music) {
       list = list.concat(musicData);
@@ -666,6 +704,17 @@ d3.csv("CultureFresco2_2.csv", function(error, data) {
   }
 
   d3.select("#controlsFilm").on("change", update);
+  d3.select("#controlsOnlyFilm").on("change", function() {
+    d3.select("#inputMusic").property("checked", false);
+    d3.select("#inputTvEntertainmentMedia").property("checked", false);
+    d3.select("#inputAdvertising").property("checked", false);
+    d3.select("#inputArtLiterature").property("checked", false);
+    d3.select("#inputFashionRetail").property("checked", false);
+    d3.select("#inputIcons").property("checked", false);
+    d3.select("#inputPoliticsSocialMovements").property("checked", false);
+    d3.select("#inputTech").property("checked", false);
+    update();
+  });
   d3.select("#controlsMusic").on("change", update);
   d3.select("#controlsTvEntertainmentMedia").on("change", update);
   d3.select("#controlsAdvertising").on("change", update);
@@ -686,6 +735,7 @@ function draw(nodes) {
             .size([width, height])
             .on("tick", tick)
             .charge(-0.01)
+          //  .friction(0.9)
             .gravity(0)
             .start();
 
