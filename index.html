@@ -257,25 +257,30 @@ div.mapTooltip2 {
   top: 670px;
 }
 
-/*.only {
-  position: absolute;
+.only {
+  /*position: absolute;
   color: white;
   font: 10px sans-serif;
-  cursor: pointer;
+  cursor: pointer;*/
+  opacity:0;
+  text-decoration: underline;
 }
 
-#onlyFilm {
-  top: 700px;
-  left: 85px;
-}*/
+.only:hover {
+  opacity:1;
+}
 
 #selectAllCategories {
   position: absolute;
   color: white;
   font: 10px sans-serif;
   cursor: pointer;
-  top: 725px;
+  top: 700px;
   left: 85px;
+}
+
+#selectAllCategories:hover {
+  color: red;
 }
 
 </style>
@@ -310,8 +315,6 @@ div.mapTooltip2 {
 <p id="theme2Description" class="themeDescription"> Mauris ullamcorper, nulla vel maximus congue, ex elit eleifend nisl, nec ornare nulla diam vitae lectus. Quisque at ante quis mauris tempus rhoncus. Nam imperdiet orci massa, ut commodo lorem faucibus eu. Sed pellentesque felis et justo sagittis fermentum. Cras a nibh libero. </p>
 
 <p id="theme3Description" class="themeDescription"> Vestibulum tincidunt, nisl et malesuada gravida, neque massa placerat risus, quis volutpat nulla risus non risus. Maecenas dapibus, velit eu viverra tincidunt, nisi eros aliquet turpis, eleifend porta arcu arcu a turpis. </p>
-
-<!-- <p id="onlyFilm" class="only"> only </p> -->
 
 <p id="selectAllCategories"> Select all </p>
 
@@ -351,13 +354,16 @@ controlsFilm.append("span")
 
   var controlsOnlyFilm = d3.select("body").append("label")
       .attr("class", "controls")
+      .style("top", "630px")
+      .style("left", "140px")
       .attr("id", "controlsOnlyFilm");
 
   var checkboxOnlyFilm = controlsOnlyFilm.append("input")
       .attr("type", "checkbox")
-      .attr("opacity", 0)
+      .style("display", "none")
       .property("checked", false);
   controlsOnlyFilm.append("span")
+      .attr("class","only")
       .text("only");
 
 var controlsMusic = d3.select("body").append("label")
@@ -371,27 +377,19 @@ var checkboxMusic = controlsMusic.append("input")
 controlsMusic.append("span")
         .text("Music");
 
-var controlsTvEntertainmentMedia = d3.select("body").append("label")
-        .attr("class", "controls")
-        .attr("id", "controlsTvEntertainmentMedia");
+var controlsOnlyMusic = d3.select("body").append("label")
+    .attr("class", "controls")
+    .style("top", "655px")
+    .style("left", "146px")
+    .attr("id", "controlsOnlyMusic");
 
-var checkboxTvEntertainmentMedia = controlsTvEntertainmentMedia.append("input")
-        .attr("type", "checkbox")
-        .attr("id", "inputTvEntertainmentMedia")
-        .property("checked", true);
-controlsTvEntertainmentMedia.append("span")
-        .text("Tv / Ent. / Media");
-
-var controlsAdvertising = d3.select("body").append("label")
-        .attr("class", "controls")
-        .attr("id", "controlsAdvertising");
-
-var checkboxAdvertising = controlsAdvertising.append("input")
-        .attr("type", "checkbox")
-        .attr("id", "inputAdvertising")
-        .property("checked", true);
-controlsAdvertising.append("span")
-        .text("Advertising");
+var checkboxOnlyMusic = controlsOnlyMusic.append("input")
+    .attr("type", "checkbox")
+    .style("display", "none")
+    .property("checked", false);
+controlsOnlyMusic.append("span")
+    .attr("class","only")
+    .text("only");
 
 var controlsArtLiterature = d3.select("body").append("label")
         .attr("class", "controls")
@@ -404,6 +402,70 @@ var checkboxArtLiterature = controlsArtLiterature.append("input")
 controlsArtLiterature.append("span")
         .text("Art / Literature");
 
+var controlsOnlyArtLiterature = d3.select("body").append("label")
+    .attr("class", "controls")
+    .style("top", "680px")
+    .style("left", "183px")
+    .attr("id", "controlsOnlyArtLiterature");
+
+var checkboxOnlyArtLiterature = controlsOnlyArtLiterature.append("input")
+    .attr("type", "checkbox")
+    .style("display", "none")
+    .property("checked", false);
+controlsOnlyArtLiterature.append("span")
+    .attr("class","only")
+    .text("only");
+
+var controlsTvEntertainmentMedia = d3.select("body").append("label")
+        .attr("class", "controls")
+        .attr("id", "controlsTvEntertainmentMedia");
+
+var checkboxTvEntertainmentMedia = controlsTvEntertainmentMedia.append("input")
+        .attr("type", "checkbox")
+        .attr("id", "inputTvEntertainmentMedia")
+        .property("checked", true);
+controlsTvEntertainmentMedia.append("span")
+        .text("Tv / Ent. / Media");
+
+var controlsOnlyTvEntertainmentMedia = d3.select("body").append("label")
+    .attr("class", "controls")
+    .style("top", "630px")
+    .style("left", "357px")
+    .attr("id", "controlsOnlyTvEntertainmentMedia");
+
+var checkboxOnlyTvEntertainmentMedia = controlsOnlyTvEntertainmentMedia.append("input")
+    .attr("type", "checkbox")
+    .style("display", "none")
+    .property("checked", false);
+controlsOnlyTvEntertainmentMedia.append("span")
+    .attr("class","only")
+    .text("only");
+
+var controlsAdvertising = d3.select("body").append("label")
+        .attr("class", "controls")
+        .attr("id", "controlsAdvertising");
+
+var checkboxAdvertising = controlsAdvertising.append("input")
+        .attr("type", "checkbox")
+        .attr("id", "inputAdvertising")
+        .property("checked", true);
+controlsAdvertising.append("span")
+        .text("Advertising");
+
+var controlsOnlyAdvertising = d3.select("body").append("label")
+    .attr("class", "controls")
+    .style("top", "655px")
+    .style("left", "335px")
+    .attr("id", "controlsOnlyAdvertising");
+
+var checkboxOnlyAdvertising = controlsOnlyAdvertising.append("input")
+    .attr("type", "checkbox")
+    .style("display", "none")
+    .property("checked", false);
+controlsOnlyAdvertising.append("span")
+    .attr("class","only")
+    .text("only");
+
 var controlsFashionRetail = d3.select("body").append("label")
         .attr("class", "controls")
         .attr("id", "controlsFashionRetail");
@@ -415,16 +477,19 @@ var checkboxFashionRetail = controlsFashionRetail.append("input")
 controlsFashionRetail.append("span")
         .text("Fashion / Retail");
 
-var controlsIcons = d3.select("body").append("label")
-        .attr("class", "controls")
-        .attr("id", "controlsIcons");
+var controlsOnlyFashionRetail = d3.select("body").append("label")
+    .attr("class", "controls")
+    .style("top", "680px")
+    .style("left", "355px")
+    .attr("id", "controlsOnlyFashionRetail");
 
-var checkboxIcons = controlsIcons.append("input")
-        .attr("type", "checkbox")
-        .attr("id", "inputIcons")
-        .property("checked", true);
-controlsIcons.append("span")
-        .text("Icons");
+var checkboxOnlyFashionRetail = controlsOnlyFashionRetail.append("input")
+    .attr("type", "checkbox")
+    .style("display", "none")
+    .property("checked", false);
+controlsOnlyFashionRetail.append("span")
+    .attr("class","only")
+    .text("only");
 
 var controlsPoliticsSocialMovements = d3.select("body").append("label")
         .attr("class", "controls")
@@ -437,6 +502,20 @@ var checkboxPoliticsSocialMovements = controlsPoliticsSocialMovements.append("in
 controlsPoliticsSocialMovements.append("span")
         .text("Politics / Social Movements");
 
+var controlsOnlyPoliticsSocialMovements = d3.select("body").append("label")
+    .attr("class", "controls")
+    .style("top", "630px")
+    .style("left", "570px")
+    .attr("id", "controlsOnlyPoliticsSocialMovements");
+
+var checkboxOnlyPoliticsSocialMovements = controlsOnlyPoliticsSocialMovements.append("input")
+    .attr("type", "checkbox")
+    .style("display", "none")
+    .property("checked", false);
+controlsOnlyPoliticsSocialMovements.append("span")
+    .attr("class","only")
+    .text("only");
+
 var controlsTech = d3.select("body").append("label")
         .attr("class", "controls")
         .attr("id", "controlsTech");
@@ -447,6 +526,45 @@ var checkboxTech = controlsTech.append("input")
         .property("checked", true);
 controlsTech.append("span")
         .text("Technology");
+
+var controlsOnlyTech = d3.select("body").append("label")
+    .attr("class", "controls")
+    .style("top", "655px")
+    .style("left", "500px")
+    .attr("id", "controlsOnlyTech");
+
+var checkboxOnlyTech = controlsOnlyTech.append("input")
+    .attr("type", "checkbox")
+    .style("display", "none")
+    .property("checked", false);
+controlsOnlyTech.append("span")
+    .attr("class","only")
+    .text("only");
+
+var controlsIcons = d3.select("body").append("label")
+        .attr("class", "controls")
+        .attr("id", "controlsIcons");
+
+var checkboxIcons = controlsIcons.append("input")
+        .attr("type", "checkbox")
+        .attr("id", "inputIcons")
+        .property("checked", true);
+controlsIcons.append("span")
+        .text("Icons");
+
+var controlsOnlyIcons = d3.select("body").append("label")
+    .attr("class", "controls")
+    .style("top", "680px")
+    .style("left", "473px")
+    .attr("id", "controlsOnlyIcons");
+
+var checkboxOnlyIcons = controlsOnlyIcons.append("input")
+    .attr("type", "checkbox")
+    .style("display", "none")
+    .property("checked", false);
+controlsOnlyIcons.append("span")
+    .attr("class","only")
+    .text("only");
 
 var div1 = d3.select("body").append("div")
               .attr("class", "mapTooltip1")
@@ -510,6 +628,20 @@ d3.csv("CultureFresco2_2.csv", function(error, data) {
            clickedAxisLabel = d;
            console.log("clickedAxisLabel", clickedAxisLabel)
          });
+
+         d3.select("#selectAllCategories")
+           .on("click", function() {
+             d3.select("#inputFilm").property("checked", true);
+             d3.select("#inputMusic").property("checked", true);
+             d3.select("#inputTvEntertainmentMedia").property("checked", true);
+             d3.select("#inputAdvertising").property("checked", true);
+             d3.select("#inputArtLiterature").property("checked", true);
+             d3.select("#inputFashionRetail").property("checked", true);
+             d3.select("#inputIcons").property("checked", true);
+             d3.select("#inputPoliticsSocialMovements").property("checked", true);
+             d3.select("#inputTech").property("checked", true);
+             draw(musicData.concat(filmData).concat(tvEntertainmentMediaData).concat(advertisingData).concat(artLiteratureData).concat(fashionRetailData).concat(iconsData).concat(politicsSocialMovementsData).concat(techData));
+           });
 
          d3.select("#backButton")
            .on("click", function(d) {
@@ -659,13 +791,21 @@ d3.csv("CultureFresco2_2.csv", function(error, data) {
     var film = checkboxFilm.node().checked
       , onlyFilm = checkboxOnlyFilm.node().checked
       , music = checkboxMusic.node().checked
+      , onlyMusic = checkboxOnlyMusic.node().checked
       , artLiterature = checkboxArtLiterature.node().checked
+      , onlyArtLiterature = checkboxOnlyArtLiterature.node().checked
       , tvEntertainmentMedia = checkboxTvEntertainmentMedia.node().checked
+      , onlyTvEntertainmentMedia = checkboxOnlyTvEntertainmentMedia.node().checked
       , advertising = checkboxAdvertising.node().checked
+      , onlyAdvertising = checkboxOnlyAdvertising.node().checked
       , fashionRetail = checkboxFashionRetail.node().checked
+      , onlyFashionRetail = checkboxOnlyFashionRetail.node().checked
       , politicsSocialMovements = checkboxPoliticsSocialMovements.node().checked
+      , onlyPoliticsSocialMovements = checkboxOnlyPoliticsSocialMovements.node().checked
       , tech = checkboxTech.node().checked
+      , onlyTech = checkboxOnlyTech.node().checked
       , icons = checkboxIcons.node().checked
+      , onlyIcons = checkboxOnlyIcons.node().checked
       , list = [];
 
     if (film) {
@@ -674,29 +814,61 @@ d3.csv("CultureFresco2_2.csv", function(error, data) {
     if (onlyFilm) {
     list = filmData;
     }
+
     if (music) {
       list = list.concat(musicData);
     }
+    if (onlyMusic) {
+    list = musicData;
+    }
+
     if (tvEntertainmentMedia) {
       list = list.concat(tvEntertainmentMediaData);
     }
+    if (onlyTvEntertainmentMedia) {
+    list = tvEntertainmentMediaData;
+    }
+
     if (advertising) {
       list = list.concat(advertisingData);
     }
+    if (onlyAdvertising) {
+    list = advertisingData;
+    }
+
     if (artLiterature) {
       list = list.concat(artLiteratureData);
     }
+    if (onlyArtLiterature) {
+    list = artLiteratureData;
+    }
+
     if (fashionRetail) {
       list = list.concat(fashionRetailData);
     }
+    if (onlyFashionRetail) {
+    list = fashionRetailData;
+    }
+
     if (politicsSocialMovements) {
       list = list.concat(politicsSocialMovementsData);
     }
+    if (onlyPoliticsSocialMovements) {
+    list = politicsSocialMovementsData;
+    }
+
     if (tech) {
       list = list.concat(techData);
     }
+    if (onlyTech) {
+    list = techData;
+    }
+
     if (icons) {
       list = list.concat(iconsData);
+    }
+    if (onlyIcons) {
+    list = iconsData;
     }
 
     draw(list);
@@ -705,6 +877,7 @@ d3.csv("CultureFresco2_2.csv", function(error, data) {
 
   d3.select("#controlsFilm").on("change", update);
   d3.select("#controlsOnlyFilm").on("change", function() {
+    d3.select("#inputFilm").property("checked", true);
     d3.select("#inputMusic").property("checked", false);
     d3.select("#inputTvEntertainmentMedia").property("checked", false);
     d3.select("#inputAdvertising").property("checked", false);
@@ -715,14 +888,118 @@ d3.csv("CultureFresco2_2.csv", function(error, data) {
     d3.select("#inputTech").property("checked", false);
     update();
   });
+
   d3.select("#controlsMusic").on("change", update);
+  d3.select("#controlsOnlyMusic").on("change", function() {
+    d3.select("#inputMusic").property("checked", true);
+    d3.select("#inputFilm").property("checked", false);
+    d3.select("#inputTvEntertainmentMedia").property("checked", false);
+    d3.select("#inputAdvertising").property("checked", false);
+    d3.select("#inputArtLiterature").property("checked", false);
+    d3.select("#inputFashionRetail").property("checked", false);
+    d3.select("#inputIcons").property("checked", false);
+    d3.select("#inputPoliticsSocialMovements").property("checked", false);
+    d3.select("#inputTech").property("checked", false);
+    update();
+  });
+
   d3.select("#controlsTvEntertainmentMedia").on("change", update);
+  d3.select("#controlsOnlyTvEntertainmentMedia").on("change", function() {
+    d3.select("#inputTvEntertainmentMedia").property("checked", true);
+    d3.select("#inputFilm").property("checked", false);
+    d3.select("#inputMusic").property("checked", false);
+    d3.select("#inputAdvertising").property("checked", false);
+    d3.select("#inputArtLiterature").property("checked", false);
+    d3.select("#inputFashionRetail").property("checked", false);
+    d3.select("#inputIcons").property("checked", false);
+    d3.select("#inputPoliticsSocialMovements").property("checked", false);
+    d3.select("#inputTech").property("checked", false);
+    update();
+  });
+
   d3.select("#controlsAdvertising").on("change", update);
-  d3.select("#controlsArtLiterature").on("change", update);;
+  d3.select("#controlsOnlyAdvertising").on("change", function() {
+    d3.select("#inputAdvertising").property("checked", true);
+    d3.select("#inputFilm").property("checked", false);
+    d3.select("#inputMusic").property("checked", false);
+    d3.select("#inputTvEntertainmentMedia").property("checked", false);
+    d3.select("#inputArtLiterature").property("checked", false);
+    d3.select("#inputFashionRetail").property("checked", false);
+    d3.select("#inputIcons").property("checked", false);
+    d3.select("#inputPoliticsSocialMovements").property("checked", false);
+    d3.select("#inputTech").property("checked", false);
+    update();
+  });
+
+  d3.select("#controlsArtLiterature").on("change", update);
+  d3.select("#controlsOnlyArtLiterature").on("change", function() {
+    d3.select("#inputArtLiterature").property("checked", true);
+    d3.select("#inputFilm").property("checked", false);
+    d3.select("#inputMusic").property("checked", false);
+    d3.select("#inputTvEntertainmentMedia").property("checked", false);
+    d3.select("#inputAdvertising").property("checked", false);
+    d3.select("#inputFashionRetail").property("checked", false);
+    d3.select("#inputIcons").property("checked", false);
+    d3.select("#inputPoliticsSocialMovements").property("checked", false);
+    d3.select("#inputTech").property("checked", false);
+    update();
+  });
+
   d3.select("#controlsFashionRetail").on("change", update);
+  d3.select("#controlsOnlyFashionRetail").on("change", function() {
+    d3.select("#inputFashionRetail").property("checked", true);
+    d3.select("#inputFilm").property("checked", false);
+    d3.select("#inputMusic").property("checked", false);
+    d3.select("#inputTvEntertainmentMedia").property("checked", false);
+    d3.select("#inputAdvertising").property("checked", false);
+    d3.select("#inputArtLiterature").property("checked", false);
+    d3.select("#inputIcons").property("checked", false);
+    d3.select("#inputPoliticsSocialMovements").property("checked", false);
+    d3.select("#inputTech").property("checked", false);
+    update();
+  });
+
   d3.select("#controlsIcons").on("change", update);
+  d3.select("#controlsOnlyIcons").on("change", function() {
+    d3.select("#inputIcons").property("checked", true);
+    d3.select("#inputFilm").property("checked", false);
+    d3.select("#inputMusic").property("checked", false);
+    d3.select("#inputTvEntertainmentMedia").property("checked", false);
+    d3.select("#inputAdvertising").property("checked", false);
+    d3.select("#inputArtLiterature").property("checked", false);
+    d3.select("#inputFashionRetail").property("checked", false);
+    d3.select("#inputPoliticsSocialMovements").property("checked", false);
+    d3.select("#inputTech").property("checked", false);
+    update();
+  });
+
   d3.select("#controlsPoliticsSocialMovements").on("change", update);
+  d3.select("#controlsOnlyPoliticsSocialMovements").on("change", function() {
+    d3.select("#inputPoliticsSocialMovements").property("checked", true);
+    d3.select("#inputFilm").property("checked", false);
+    d3.select("#inputMusic").property("checked", false);
+    d3.select("#inputTvEntertainmentMedia").property("checked", false);
+    d3.select("#inputAdvertising").property("checked", false);
+    d3.select("#inputArtLiterature").property("checked", false);
+    d3.select("#inputFashionRetail").property("checked", false);
+    d3.select("#inputIcons").property("checked", false);
+    d3.select("#inputTech").property("checked", false);
+    update();
+  });
+
   d3.select("#controlsTech").on("change", update);
+  d3.select("#controlsOnlyTech").on("change", function() {
+    d3.select("#inputTech").property("checked", true);
+    d3.select("#inputFilm").property("checked", false);
+    d3.select("#inputMusic").property("checked", false);
+    d3.select("#inputTvEntertainmentMedia").property("checked", false);
+    d3.select("#inputAdvertising").property("checked", false);
+    d3.select("#inputArtLiterature").property("checked", false);
+    d3.select("#inputFashionRetail").property("checked", false);
+    d3.select("#inputIcons").property("checked", false);
+    d3.select("#inputPoliticsSocialMovements").property("checked", false);
+    update();
+  });
 
   draw(musicData.concat(filmData).concat(tvEntertainmentMediaData).concat(advertisingData).concat(artLiteratureData).concat(fashionRetailData).concat(iconsData).concat(politicsSocialMovementsData).concat(techData));
 
