@@ -290,7 +290,12 @@ div.mapTooltip2 {
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 
-<h1 style="float:left"> AKQA Timeline </h1>
+<h1 style="float:left"> AKQA Culture + Trends </h1>
+
+<!-- <div>
+    <input id="search">
+    <button type="button" onclick="searchNode()">Search</button>
+</div> -->
 
 <p id="backButton" class="notDisplayed"> Back to initial scale </p>
 
@@ -576,8 +581,8 @@ var div2 = d3.select("body").append("div")
 
 var xVar = "YEAR",
     node,
-    selectedTheme = "all";
-    //list = [];
+    selectedTheme = "all",
+    list = [];
 
 d3.select("#viewAllThemes").attr("class", "notDisplayed");
 d3.selectAll(".arrow").classed("notDisplayed", true);
@@ -1033,13 +1038,7 @@ function draw(nodes) {
                   .classed("node", true)
                   .call(force.drag);
 
-              newNode
-              // .classed("nodeVisible", function (d) {
-              //           if (d.THEME === selectedTheme) {return true;}
-              //           else if (selectedTheme === "all") {return true;}
-              //           else {return false;}
-              //         })
-                      .on("mouseover", function(d) {
+              newNode.on("mouseover", function(d) {
                       if (d.THEME === selectedTheme) {
                         div2.transition().duration(300).style("opacity", 1);
                         div2.text(d.TITLE + " (" + d.YEAR + ")")
@@ -1206,5 +1205,43 @@ function draw(nodes) {
         }
 
 }
+
+// var optArray = [];
+// for (var i = 0; i < graph.nodes.length - 1; i++) {
+//     optArray.push(graph.nodes[i].name);
+// }
+//
+// optArray = optArray.sort();
+
+// $(function () {
+//     $("#search").autocomplete({
+//         source: list
+//     });
+// });
+//
+// function searchNode() {
+//
+//     //find the node
+//     console.log("search");
+//     var selectedVal = document.getElementById("search").value;
+//     var allNode = svg.selectAll(".node");
+//     console.log("allNode", allNode);
+//
+//     if (selectedVal === "none") {
+//         allNode.style("opacity", 0);//.style("stroke-width", "1");
+//     }
+//
+//     else {
+//         var selected = allNode.filter(function (d, i) {
+//             return d.TITLE !== selectedVal; console.log("d.TITLE", d.TITLE);
+//         selected.style("opacity", "0");
+//         // var link = svg.selectAll(".link")
+//         // link.style("opacity", "0");
+//         d3.selectAll(".node").transition()
+//             .duration(5000)
+//             .style("opacity", 1);
+//         })
+//     }
+// }
 
 </script>
